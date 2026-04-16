@@ -1,5 +1,6 @@
 {
     "require": {
-        "tightenco/jigsaw": "^1.8"
+        "tightenco/jigsaw": "^1.8",
+        "samdark/sitemap": "^2.5"
     }
 }
