@@ -20,7 +20,12 @@
   
   --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  --font-serif: "DM", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-serif: "GeistPixel-Line", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-pixel-triangle: "GeistPixel-Triangle", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-pixel-grid: "GeistPixel-Grid", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-pixel-line: "GeistPixel-Line", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-pixel-square: "GeistPixel-Square", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    
   --font-mono: "FiraMono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
@@ -34,38 +39,38 @@
 
 
 @utility prose-mauve {
-  --tw-prose-body: var(--color-mauve-800);
-  --tw-prose-headings: var(--color-mauve-900);
-  --tw-prose-lead: var(--color-mauve-700);
-  --tw-prose-links: var(--color-mauve-900);
-  --tw-prose-bold: var(--color-mauve-900);
-  --tw-prose-counters: var(--color-mauve-600);
-  --tw-prose-bullets: var(--color-mauve-400);
-  --tw-prose-hr: var(--color-mauve-300);
-  --tw-prose-quotes: var(--color-mauve-900);
-  --tw-prose-quote-borders: var(--color-mauve-300);
-  --tw-prose-captions: var(--color-mauve-700);
-  --tw-prose-code: var(--color-mauve-900);
-  --tw-prose-pre-code: var(--color-mauve-100);
-  --tw-prose-pre-bg: var(--color-mauve-900);
-  --tw-prose-th-borders: var(--color-mauve-300);
-  --tw-prose-td-borders: var(--color-mauve-200);
-  --tw-prose-invert-body: var(--color-mauve-200);
+  --tw-prose-body: var(--color-zinc-800);
+  --tw-prose-headings: var(--color-zinc-900);
+  --tw-prose-lead: var(--color-zinc-700);
+  --tw-prose-links: var(--color-zinc-900);
+  --tw-prose-bold: var(--color-zinc-900);
+  --tw-prose-counters: var(--color-zinc-600);
+  --tw-prose-bullets: var(--color-zinc-400);
+  --tw-prose-hr: var(--color-zinc-300);
+  --tw-prose-quotes: var(--color-zinc-900);
+  --tw-prose-quote-borders: var(--color-zinc-300);
+  --tw-prose-captions: var(--color-zinc-700);
+  --tw-prose-code: var(--color-zinc-900);
+  --tw-prose-pre-code: var(--color-zinc-100);
+  --tw-prose-pre-bg: var(--color-zinc-900);
+  --tw-prose-th-borders: var(--color-zinc-300);
+  --tw-prose-td-borders: var(--color-zinc-200);
+  --tw-prose-invert-body: var(--color-zinc-200);
   --tw-prose-invert-headings: var(--color-white);
-  --tw-prose-invert-lead: var(--color-mauve-300);
+  --tw-prose-invert-lead: var(--color-zinc-300);
   --tw-prose-invert-links: var(--color-white);
   --tw-prose-invert-bold: var(--color-white);
-  --tw-prose-invert-counters: var(--color-mauve-400);
-  --tw-prose-invert-bullets: var(--color-mauve-600);
-  --tw-prose-invert-hr: var(--color-mauve-700);
-  --tw-prose-invert-quotes: var(--color-mauve-100);
-  --tw-prose-invert-quote-borders: var(--color-mauve-700);
-  --tw-prose-invert-captions: var(--color-mauve-400);
+  --tw-prose-invert-counters: var(--color-zinc-400);
+  --tw-prose-invert-bullets: var(--color-zinc-600);
+  --tw-prose-invert-hr: var(--color-zinc-700);
+  --tw-prose-invert-quotes: var(--color-zinc-100);
+  --tw-prose-invert-quote-borders: var(--color-zinc-700);
+  --tw-prose-invert-captions: var(--color-zinc-400);
   --tw-prose-invert-code: var(--color-white);
-  --tw-prose-invert-pre-code: var(--color-mauve-300);
+  --tw-prose-invert-pre-code: var(--color-zinc-300);
   --tw-prose-invert-pre-bg: rgb(0 0 0 / 50%);
-  --tw-prose-invert-th-borders: var(--color-mauve-600);
-  --tw-prose-invert-td-borders: var(--color-mauve-700);
+  --tw-prose-invert-th-borders: var(--color-zinc-600);
+  --tw-prose-invert-td-borders: var(--color-zinc-700);
 }
 
 /**
@@ -78,15 +83,6 @@
 
 
 @layer base {
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src:
-      url('/assets/fonts/Inter-Light-BETA.woff2') format('woff2'),
-      url('/assets/fonts/Inter-Light-BETA.woff') format('woff');
-    }
     
   @font-face {
     font-family: 'Inter';
@@ -129,14 +125,6 @@
   }
 
   @font-face {
-    font-family: 'DM';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/assets/fonts/DMSerifDisplay-Regular.ttf') format('truetype');
-  }
-
-  @font-face {
     font-family: 'FiraMono';
     font-style: normal;
     font-weight: 400;
@@ -159,6 +147,38 @@
     font-display: swap;
     src: url('/assets/fonts/FiraMono-Bold.ttf') format('truetype');
   }
+  
+  @font-face {
+    font-family: 'GeistPixel-Grid';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/assets/fonts/GeistPixel-Grid.woff2') format('woff2');
+  }
+  
+  @font-face {
+    font-family: 'GeistPixel-Line';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/assets/fonts/GeistPixel-Line.woff2') format('woff2');
+  }
+  
+  @font-face {
+    font-family: 'GeistPixel-Square';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/assets/fonts/GeistPixel-Square.woff2') format('woff2');
+  }
+  
+  @font-face {
+    font-family: 'GeistPixel-Triangle';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/GeistPixel-Triangle.woff2') format('woff2');
+  }
 
   *::selection {
     color: #fff;
@@ -166,8 +186,7 @@
   }
 
   body {
-    color: #374151; /* used to give older browsers a decent default */
-    @apply text-gray-700;
+    @apply text-zinc-800;
   }
 
   a {
@@ -309,7 +328,7 @@
 
 
 .markdown {
-    @apply text-gray-700 leading-relaxed;
+    @apply text-zinc-700 leading-relaxed;
 
     > * + * {
         @apply mt-4;
@@ -328,7 +347,7 @@
     }
 
     a {
-        @apply text-gray-900 underline;
+        @apply text-zinc-900 underline;
     }
     
     a:hover {
@@ -711,4 +730,112 @@ html[data-agent] [data-agent-content] {
     left: var(--hit-area-l, 0px);
     pointer-events: inherit;
   }
+}
+
+
+/* ─── Industrial Design System ───────────────────────────────────────────────
+   Grid rules, diagonal hatching, crosshair marks, and spec labels inspired
+   by technical / field-operations design language.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* Subtle ruled grid background — apply to a container with a currentColor set */
+@utility grid-ruled {
+  background-image:
+    linear-gradient(color-mix(in srgb, currentColor 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, currentColor 6%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Diagonal hatch fill — size the element and set text-* to control color */
+@utility hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    currentColor 0,
+    currentColor 1px,
+    transparent 0,
+    transparent 7px
+  );
+}
+
+@utility line {
+  background-image: repeating-linear-gradient(
+    0deg,
+    currentColor 0,
+    currentColor 1px,
+    transparent 0,
+    transparent 7px
+  );
+}
+
+/* Technical spec label — 10px mono uppercase with wide tracking */
+@utility spec-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Industrial card: + registration marks at top-left and bottom-right corners */
+.card-industrial {
+  position: relative;
+}
+
+.card-industrial::before,
+.card-industrial::after {
+  content: '+';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+}
+
+.card-industrial::before {
+  top: 1rem;
+  left: -1rem;
+}
+
+.card-industrial::after {
+  bottom: 1rem;
+  right: -1rem;
+}
+
+/* Industrial number counter — large, tight, all-caps grotesque */
+.counter-industrial {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Thin rule separator with corner tick marks */
+.rule-industrial {
+  position: relative;
+  border-top: 1px solid;
+}
+
+.rule-industrial::before,
+.rule-industrial::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid currentColor;
+}
+
+.rule-industrial::before {
+  left: 0;
+  border-left: 1px solid currentColor;
+}
+
+.rule-industrial::after {
+  right: 0;
+  border-right: 1px solid currentColor;
 }
