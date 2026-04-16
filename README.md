@@ -1,6 +1,6 @@
 # Content-md
 
-[content-md](https://contentmd.org) is a simple, open specification for structuring content to be consumed by AI agents.
+[content-md](https://contentmd.org) is an open specification for structuring content to be consumed by AI agents.
 
 Content-md synthesizes the current practices of structuring the markdown representation of web pages to be consumed by AI agents.
 
@@ -13,7 +13,7 @@ This repo contains the specification, documentation, and reference SDK.
 
 ## About
 
-Content-md is an open format maintained by [OneOffTech](https://oneofftech.xyz) and open to contributions from the community.
+Content-md is an open specification maintained by [OneOffTech](https://oneofftech.xyz) and open to contributions from the community.
 
 ## License
 
