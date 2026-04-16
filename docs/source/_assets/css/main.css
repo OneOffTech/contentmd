@@ -1,0 +1,714 @@
+@import 'tailwindcss';
+
+@plugin "@tailwindcss/typography";
+
+/* @config '../../../tailwind.config.js'; */
+
+@theme {
+  --color-accent-50: #f4faff;
+  --color-accent-100: #e2f0ff;
+  --color-accent-200: #c4defe;
+  --color-accent-300: #5e95e4;
+  --color-accent-400: #2173e6;
+  --color-accent-500: #1358cc;
+  --color-accent-600: #06038d; 
+  /* 'rgb(6, 3, 141)', // OOT logo color */
+  --color-accent-700: #05026a;
+  --color-accent-800: #04025B;
+  --color-accent-900: #020129;
+  --color-klink: #223ce6;
+  
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-serif: "DM", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: "FiraMono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+@utility tap-highlight-accent {
+  -webkit-tap-highlight-color: rgba(34, 2, 159, 0.4);
+
+  @variant dark {
+    -webkit-tap-highlight-color: rgba(142, 197, 255, 0.6);
+  }
+}
+
+
+@utility prose-mauve {
+  --tw-prose-body: var(--color-mauve-800);
+  --tw-prose-headings: var(--color-mauve-900);
+  --tw-prose-lead: var(--color-mauve-700);
+  --tw-prose-links: var(--color-mauve-900);
+  --tw-prose-bold: var(--color-mauve-900);
+  --tw-prose-counters: var(--color-mauve-600);
+  --tw-prose-bullets: var(--color-mauve-400);
+  --tw-prose-hr: var(--color-mauve-300);
+  --tw-prose-quotes: var(--color-mauve-900);
+  --tw-prose-quote-borders: var(--color-mauve-300);
+  --tw-prose-captions: var(--color-mauve-700);
+  --tw-prose-code: var(--color-mauve-900);
+  --tw-prose-pre-code: var(--color-mauve-100);
+  --tw-prose-pre-bg: var(--color-mauve-900);
+  --tw-prose-th-borders: var(--color-mauve-300);
+  --tw-prose-td-borders: var(--color-mauve-200);
+  --tw-prose-invert-body: var(--color-mauve-200);
+  --tw-prose-invert-headings: var(--color-white);
+  --tw-prose-invert-lead: var(--color-mauve-300);
+  --tw-prose-invert-links: var(--color-white);
+  --tw-prose-invert-bold: var(--color-white);
+  --tw-prose-invert-counters: var(--color-mauve-400);
+  --tw-prose-invert-bullets: var(--color-mauve-600);
+  --tw-prose-invert-hr: var(--color-mauve-700);
+  --tw-prose-invert-quotes: var(--color-mauve-100);
+  --tw-prose-invert-quote-borders: var(--color-mauve-700);
+  --tw-prose-invert-captions: var(--color-mauve-400);
+  --tw-prose-invert-code: var(--color-white);
+  --tw-prose-invert-pre-code: var(--color-mauve-300);
+  --tw-prose-invert-pre-bg: rgb(0 0 0 / 50%);
+  --tw-prose-invert-th-borders: var(--color-mauve-600);
+  --tw-prose-invert-td-borders: var(--color-mauve-700);
+}
+
+/**
+ * Agent variant — triggered by data-agent on <html>.
+ * Transforms the page into a markdown-like text view, approximating
+ * how a headless AI agent or LLM would parse the page content.
+ * Usage: <img class="agent:hidden" ...> or <p class="agent:block" ...>
+ */
+@variant agent (:is(html[data-agent]) &);
+
+
+@layer base {
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src:
+      url('/assets/fonts/Inter-Light-BETA.woff2') format('woff2'),
+      url('/assets/fonts/Inter-Light-BETA.woff') format('woff');
+    }
+    
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+      url('/assets/fonts/Inter-Regular.woff2') format('woff2'),
+      url('/assets/fonts/Inter-Regular.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src:
+      url('/assets/fonts/Inter-Medium.woff2') format('woff2'),
+      url('/assets/fonts/Inter-Medium.woff') format('woff');
+    }
+    
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src:
+        url('/assets/fonts/Inter-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/Inter-SemiBold.woff') format('woff');
+  }
+  
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src:
+      url('/assets/fonts/Inter-Bold.woff2') format('woff2'),
+      url('/assets/fonts/Inter-Bold.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'DM';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/DMSerifDisplay-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'FiraMono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/assets/fonts/FiraMono-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'FiraMono';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/assets/fonts/FiraMono-Medium.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'FiraMono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/assets/fonts/FiraMono-Bold.ttf') format('truetype');
+  }
+
+  *::selection {
+    color: #fff;
+    background-color: rgb(34, 2, 159);
+  }
+
+  body {
+    color: #374151; /* used to give older browsers a decent default */
+    @apply text-gray-700;
+  }
+
+  a {
+    @apply no-underline;
+    @apply text-accent-600;
+
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    @variant dark {
+      @apply text-accent-200;
+    }
+  }
+
+  a:hover {
+    @apply text-accent-600;
+
+    @variant dark {
+      @apply text-accent-200;
+    }
+  }
+
+  a:focus {
+    @apply text-accent-600;
+
+    @variant dark {
+      @apply text-accent-200;
+    }
+  }
+
+  .transition {
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .bg-gradient-radial-blue {
+    background-color: rgb(34, 2, 159);
+    background-image:
+      linear-gradient(19deg, rgb(28, 117, 250), rgb(34, 2, 159));
+  }
+
+
+  /* 34D399 */
+}
+
+@layer components {
+  .overlined::before {
+    content: '';
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 40%;
+    bottom: -5%;
+    -webkit-transform: skew(-8deg) scale(1) rotate(1deg);
+    transform: skew(-8deg) scale(1) rotate(1deg);
+    z-index: -1;
+    @apply bg-green-100;
+  }
+}
+
+.transition-all {
+    transition-property: all;
+}
+
+.transition-opacity {
+    transition-property: opacity;
+}
+
+.transition-fast {
+    transition-duration: 200ms;
+}
+
+.transition-faster {
+    transition-duration: 100ms;
+}
+
+.transition-normal {
+    transition-duration: 800ms;
+}
+
+.aspect-video {
+    aspect-ratio: 16 / 9;
+}
+
+.video-caption{
+    color: #6b7280;
+    font-size: 0.875em;
+    line-height: 1.4285714;
+    margin-top: 0.8571429em;
+}
+
+@media print {
+    
+    .print-hidden {
+        display: none;
+    }
+    .page-break	{ 
+        display: block; 
+        page-break-before: always;
+    }
+
+    .page-break-prevent {
+        page-break-inside: avoid;
+    }
+
+    .print-link:link:after, .print-link:visited:after { content:" [" attr(href) "] "; }
+
+    .print-px-0 {
+        @apply px-0;
+    }
+    
+    .print-pt-8 {
+        @apply pt-8;
+    }
+
+    .print-w-1\/2 {
+        @apply w-1/2;
+    }
+
+    .print-w-full {
+        @apply w-full;
+    }
+    
+    .print-pr-8 {
+        @apply pr-8;
+    }
+
+    a {
+        @apply no-underline;
+    
+        background:none;
+    }
+}
+
+@media print and (color) {
+    * {
+       -webkit-print-color-adjust: exact;
+       print-color-adjust: exact;
+    }
+ }
+
+
+.markdown {
+    @apply text-gray-700 leading-relaxed;
+
+    > * + * {
+        @apply mt-4;
+    }
+
+    h1 {
+        @apply text-4xl my-16 text-black leading-tight;
+    }
+    
+    h2 {
+        @apply text-2xl font-bold mb-4 text-black leading-tight;
+    }
+    
+    h3 {
+        @apply text-xl font-bold mb-4 text-black leading-tight;
+    }
+
+    a {
+        @apply text-gray-900 underline;
+    }
+    
+    a:hover {
+        @apply text-accent-600;
+    }
+
+    ul {
+        @apply list-disc pl-6;
+
+        li + li {
+            @apply mt-2;
+        }
+    }
+}
+
+.transition-button {
+  transition-property: scale, translate;
+  transition-timing-function: cubic-bezier(.25, .46, .45, .94);
+  transition-duration: 0.16s;
+}
+
+.transition-button:active {
+  scale: 0.98;
+  translate: 0 1px;
+}
+
+
+
+
+/* ─── Agent mode ──────────────────────────────────────────────────────────────
+   Applied when <body data-agent> is present.
+   Strips all visual design and renders the page as plain markdown-like text,
+   approximating what an LLM or headless agent would read.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+
+html[data-agent]::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+html[data-agent]::view-transition-new(root) {
+  animation: unclip 1s;
+  clip-path: polygon(-100vmax 100%, 100% 100%, 100% -100vmax);
+}
+
+@keyframes unclip {
+  0% {
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+  }
+}
+
+html[data-agent] {
+  font-family: 'FiraMono', Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #000000;
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  view-transition-name: agent-transition;
+
+  @variant dark {
+    color: #fff;
+  }
+}
+
+/* Strip all decorative CSS from every element */
+html[data-agent] * {
+  font-family: inherit;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  color: inherit;
+  outline: none;
+}
+html[data-agent] div {
+  background-color: transparent;
+}
+
+/* Hide layout chrome, decorative, and non-content elements */
+html[data-agent] svg,
+html[data-agent] img,
+html[data-agent] picture,
+html[data-agent] video,
+html[data-agent] iframe,
+html[data-agent] [aria-hidden="true"],
+html[data-agent] [role="presentation"] {
+  display: none !important;
+}
+
+/* Keep the site header and navigation visible in agent mode */
+html[data-agent] header,
+html[data-agent] nav {
+  display: revert !important;
+}
+
+html[data-agent] header svg,
+html[data-agent] nav svg {
+  display: revert !important;
+}
+
+/* ── Headings: add markdown prefix via ::before ─────────────────────────── */
+html[data-agent] h1::before { content: "# "; }
+html[data-agent] h2::before { content: "## "; }
+html[data-agent] h3::before { content: "### "; }
+html[data-agent] h4::before { content: "#### "; }
+html[data-agent] h5::before { content: "##### "; }
+html[data-agent] h6::before { content: "###### "; }
+
+html[data-agent] h1,
+html[data-agent] h2,
+html[data-agent] h3,
+html[data-agent] h4,
+html[data-agent] h5,
+html[data-agent] h6 {
+  display: block;
+  font-weight: bold;
+  margin: 1.5em 0 0.5em;
+  font-size: 1rem;
+}
+
+/* ── Paragraphs ─────────────────────────────────────────────────────────── */
+html[data-agent] p {
+  margin: 0.75em 0;
+}
+
+/* ── Links: append href inline ──────────────────────────────────────────── */
+html[data-agent] a {
+  text-decoration: underline;
+}
+
+html[data-agent] a[href]:not([href^="#"]):not([href^="mailto"]):not(.ignore-agent)::after {
+  content: " (" attr(href) ")";
+  font-size: 0.8em;
+  opacity: 0.55;
+  word-break: break-all;
+}
+
+html[data-agent] a[aria-current]:not(.ignore-agent)::before {
+  content: " > ";
+  word-break: break-all;
+}
+
+/* ── Lists: use markdown-style bullets ──────────────────────────────────── */
+html[data-agent] ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+html[data-agent] ul > li::before {
+  content: "- ";
+}
+
+html[data-agent] ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
+/* ── Blockquotes ────────────────────────────────────────────────────────── */
+html[data-agent] blockquote {
+  padding-left: 0;
+  border: none;
+}
+
+html[data-agent] blockquote > p::before {
+  content: "> ";
+}
+
+/* ── Inline code and pre blocks ─────────────────────────────────────────── */
+html[data-agent] :not(pre) > code::before,
+html[data-agent] :not(pre) > code::after {
+  content: "`";
+}
+
+html[data-agent] pre {
+  white-space: pre-wrap;
+  border: 1px solid #ccc !important;
+  background: transparent;
+  padding: 0.75em;
+  margin: 1em 0;
+}
+
+html[data-agent] pre::before,
+html[data-agent] pre::after {
+  content: "```";
+  display: block;
+  opacity: 0.5;
+}
+
+/* ── Horizontal rules ───────────────────────────────────────────────────── */
+html[data-agent] hr {
+  border: none !important;
+  display: block;
+}
+
+html[data-agent] hr::before {
+  content: "---";
+  display: block;
+  color: #999;
+}
+
+html[data-agent] details > *:not(summary) {
+  display: block !important;
+}
+
+html[data-agent] [data-agent-thinking] {
+  display: none !important;
+}
+
+html[data-agent] [data-agent-content] {
+  display: block !important;
+}
+
+
+
+/* ─── Agent suggestions thinking animation ────────────────────────────────── */
+
+@keyframes agent-thinking-dot {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+.agent-thinking-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background-color: currentColor;
+  animation: agent-thinking-dot 1.4s ease-in-out infinite;
+}
+
+
+/* ─── Hit area utilities (via shadcn registry) ────────────────────────────────
+   Expands interactive hit areas without changing layout.
+   Usage: <button class="hit-area hit-area-4"> or hit-area-x-2, hit-area-t-3…
+   ──────────────────────────────────────────────────────────────────────────── */
+
+
+@utility hit-area {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-* {
+  position: relative;
+  --hit-area-t: --spacing(--value(number) * -1);
+  --hit-area-t: calc(--value([*]) * -1);
+  --hit-area-b: --spacing(--value(number) * -1);
+  --hit-area-b: calc(--value([*]) * -1);
+  --hit-area-l: --spacing(--value(number) * -1);
+  --hit-area-l: calc(--value([*]) * -1);
+  --hit-area-r: --spacing(--value(number) * -1);
+  --hit-area-r: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-l-* {
+  position: relative;
+  --hit-area-l: --spacing(--value(number) * -1);
+  --hit-area-l: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-r-* {
+  position: relative;
+  --hit-area-r: --spacing(--value(number) * -1);
+  --hit-area-r: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-t-* {
+  position: relative;
+  --hit-area-t: --spacing(--value(number) * -1);
+  --hit-area-t: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-b-* {
+  position: relative;
+  --hit-area-b: --spacing(--value(number) * -1);
+  --hit-area-b: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-x-* {
+  position: relative;
+  --hit-area-l: --spacing(--value(number) * -1);
+  --hit-area-l: calc(--value([*]) * -1);
+  --hit-area-r: --spacing(--value(number) * -1);
+  --hit-area-r: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
+
+@utility hit-area-y-* {
+  position: relative;
+  --hit-area-t: --spacing(--value(number) * -1);
+  --hit-area-t: calc(--value([*]) * -1);
+  --hit-area-b: --spacing(--value(number) * -1);
+  --hit-area-b: calc(--value([*]) * -1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--hit-area-t, 0px);
+    right: var(--hit-area-r, 0px);
+    bottom: var(--hit-area-b, 0px);
+    left: var(--hit-area-l, 0px);
+    pointer-events: inherit;
+  }
+}
