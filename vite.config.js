@@ -5,6 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
     assetsInclude: ['**/*.woff2'],
 
+    server: {
+        host: '127.0.0.1',
+    },
+
     plugins: [
         jigsaw({
             input: ['source/_assets/js/main.js', 'source/_assets/css/main.css'],

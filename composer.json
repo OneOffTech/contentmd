@@ -1,0 +1,12 @@
+{
+    "require": {
+        "tightenco/jigsaw": "^1.8",
+        "samdark/sitemap": "^2.5",
+        "symfony/dom-crawler": "^7.4",
+        "avvertix/html-shot": "^0.1.0"
+    },
+    "scripts": {
+        "post-install-cmd": "HtmlShot\\Composer\\Installer::downloadArtifact",
+        "post-update-cmd": "HtmlShot\\Composer\\Installer::downloadArtifact"
+    }
+}

@@ -5,19 +5,6 @@
 /* @config '../../../tailwind.config.js'; */
 
 @theme {
-  --color-accent-50: #f4faff;
-  --color-accent-100: #e2f0ff;
-  --color-accent-200: #c4defe;
-  --color-accent-300: #5e95e4;
-  --color-accent-400: #2173e6;
-  --color-accent-500: #1358cc;
-  --color-accent-600: #06038d; 
-  /* 'rgb(6, 3, 141)', // OOT logo color */
-  --color-accent-700: #05026a;
-  --color-accent-800: #04025B;
-  --color-accent-900: #020129;
-  --color-klink: #223ce6;
-  
   --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-serif: "GeistPixel-Line", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -27,9 +14,10 @@
   --font-pixel-square: "GeistPixel-Square", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     
   --font-mono: "FiraMono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-hand: "Virgil", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
-@utility tap-highlight-accent {
+@utility tap-highlight-orange {
   -webkit-tap-highlight-color: rgba(34, 2, 159, 0.4);
 
   @variant dark {
@@ -180,6 +168,15 @@
     src: url('/assets/fonts/GeistPixel-Triangle.woff2') format('woff2');
   }
 
+  @font-face {
+    font-family: 'Virgil';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+      url('/assets/fonts/Virgil.woff2') format('woff2');
+  }
+
   *::selection {
     color: #fff;
     background-color: rgb(34, 2, 159);
@@ -191,28 +188,28 @@
 
   a {
     @apply no-underline;
-    @apply text-accent-600;
+    @apply text-orange-600;
 
     transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     @variant dark {
-      @apply text-accent-200;
+      @apply text-orange-200;
     }
   }
 
   a:hover {
-    @apply text-accent-600;
+    @apply text-orange-600;
 
     @variant dark {
-      @apply text-accent-200;
+      @apply text-orange-200;
     }
   }
 
   a:focus {
-    @apply text-accent-600;
+    @apply text-orange-600;
 
     @variant dark {
-      @apply text-accent-200;
+      @apply text-orange-200;
     }
   }
 
@@ -351,7 +348,7 @@
     }
     
     a:hover {
-        @apply text-accent-600;
+        @apply text-orange-600;
     }
 
     ul {
@@ -565,6 +562,88 @@ html[data-agent] [data-agent-content] {
   display: block !important;
 }
 
+/* ── .ignore-agent: opt an element and its descendants out of agent rendering ─
+   Add class="ignore-agent" to any container to preserve its normal visual
+   rendering in agent mode. All agent-mode overrides are reverted.
+   ──────────────────────────────────────────────────────────────────────────── */
+html[data-agent] .ignore-agent,
+html[data-agent] .ignore-agent * {
+  font-family: revert;
+  background-image: revert !important;
+  background-color: revert;
+  box-shadow: revert !important;
+  text-shadow: revert !important;
+  border-color: revert !important;
+  border-radius: revert !important;
+  color: revert;
+}
+
+html[data-agent] .ignore-agent svg,
+html[data-agent] .ignore-agent img,
+html[data-agent] .ignore-agent picture,
+html[data-agent] .ignore-agent video,
+html[data-agent] .ignore-agent iframe,
+html[data-agent] .ignore-agent [aria-hidden="true"],
+html[data-agent] .ignore-agent [role="presentation"] {
+  display: revert !important;
+}
+
+html[data-agent] .ignore-agent h1::before,
+html[data-agent] .ignore-agent h2::before,
+html[data-agent] .ignore-agent h3::before,
+html[data-agent] .ignore-agent h4::before,
+html[data-agent] .ignore-agent h5::before,
+html[data-agent] .ignore-agent h6::before {
+  content: none;
+}
+
+html[data-agent] .ignore-agent h1,
+html[data-agent] .ignore-agent h2,
+html[data-agent] .ignore-agent h3,
+html[data-agent] .ignore-agent h4,
+html[data-agent] .ignore-agent h5,
+html[data-agent] .ignore-agent h6 {
+  font-size: revert;
+  font-weight: revert;
+  margin: revert;
+}
+
+html[data-agent] .ignore-agent a[href]::after,
+html[data-agent] .ignore-agent a[aria-current]::before {
+  content: none;
+}
+
+html[data-agent] .ignore-agent ul {
+  list-style: revert;
+  padding-left: revert;
+}
+
+html[data-agent] .ignore-agent ul > li::before {
+  content: none;
+}
+
+html[data-agent] .ignore-agent blockquote > p::before {
+  content: none;
+}
+
+html[data-agent] .ignore-agent :not(pre) > code::before,
+html[data-agent] .ignore-agent :not(pre) > code::after {
+  content: none;
+}
+
+html[data-agent] .ignore-agent pre::before,
+html[data-agent] .ignore-agent pre::after {
+  content: none;
+}
+
+html[data-agent] .ignore-agent hr {
+  display: revert;
+  border: revert !important;
+}
+
+html[data-agent] .ignore-agent hr::before {
+  content: none;
+}
 
 
 /* ─── Agent suggestions thinking animation ────────────────────────────────── */
