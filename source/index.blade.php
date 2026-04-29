@@ -51,68 +51,27 @@
     </div>
 
     <div class="pt-8">
-    {{-- Ecosystem section --}}
+    {{-- Why content-md section --}}
 
         <x-section>
-            {{-- <x-slot name="eyebrow"><x-eyebrow>Ecosystem</x-eyebrow></x-slot> --}}
-            
             Why content-md
 
-            <x-slot name="subheadline">...</x-slot>
+            <x-slot name="subheadline">AI agents can read HTML or complex formats. Time and tokens set the rules.</x-slot>
         </x-section>
 
         <x-container class="mb-16 mt-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 agent:flex agent:flex-col">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 agent:flex agent:flex-col">
 
                 <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">WordPress Plugin</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Return content-md versions of articles and pages with zero configuration. Drop-in plugin for the world's most popular CMS.</p>
-                    <span class="spec-label inline-block px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">In development</span>
-                </div>
-
-                <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Caddy Plugin</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.</p>
-                    <span class="spec-label inline-block px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">In development</span>
+                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Use tokens wisely</h3>
+                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400">Every token sent to an LLM is billed. A typical web page loaded as HTML — with navigation, scripts, and layout markup — can run to tens of thousands of tokens. This page weighs around 80 KB as HTML; as content-md, the same information fits in under 4 KB. Pure signal, no noise. At scale, the difference is significant.</p>
                 </div>
 
                 <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Markdown Parsers</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Parser plugins for popular libraries to handle content-md custom blocks: <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;figure&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;abstract&gt;</code>.</p>
-                    <span class="spec-label inline-block px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">In development</span>
+                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">The creator wins</h3>
+                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400">No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page — and that intent comes through.</p>
                 </div>
 
-                <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">CLI Validator</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Validate a content-md page, estimate its size and token count. Ensure you're within context window bounds before publishing.</p>
-                    <span class="spec-label inline-block px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">In development</span>
-                </div>
-
-            </div>
-        </x-container>
-    </div>
-
-    {{-- Philosophy strip --}}
-    <div class="relative bg-zinc-100 dark:bg-zinc-700 py-8 overflow-hidden">
-        <div class="absolute inset-0 grid-ruled text-zinc-950 dark:text-white pointer-events-none agent:hidden" aria-hidden="true"></div>
-        {{-- Corner crosshairs --}}
-        <span class="absolute top-2 left-4 font-mono text-xs text-zinc-400 dark:text-zinc-500 leading-none select-none agent:hidden" aria-hidden="true">+</span>
-        <span class="absolute top-2 right-4 font-mono text-xs text-zinc-400 dark:text-zinc-500 leading-none select-none agent:hidden" aria-hidden="true">+</span>
-        <span class="absolute bottom-2 left-4 font-mono text-xs text-zinc-400 dark:text-zinc-500 leading-none select-none agent:hidden" aria-hidden="true">+</span>
-        <span class="absolute bottom-2 right-4 font-mono text-xs text-zinc-400 dark:text-zinc-500 leading-none select-none agent:hidden" aria-hidden="true">+</span>
-        <x-container class="relative">
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-sm font-medium text-zinc-700 dark:text-zinc-300 agent:flex-col agent:items-start">
-                <div>
-                    <strong class="text-zinc-950 dark:text-white">Web pages</strong> with interactive content
-                    <span class="mx-2 text-zinc-400 dark:text-zinc-500">→</span>
-                    <em>for humans</em>
-                </div>
-                <div class="hidden sm:block w-px h-6 bg-zinc-300 dark:bg-zinc-500 agent:hidden"></div>
-                <div>
-                    <strong class="text-zinc-950 dark:text-white">content-md</strong> with high-fidelity text
-                    <span class="mx-2 text-zinc-400 dark:text-zinc-500">→</span>
-                    <em>for AI agents</em>
-                </div>
             </div>
         </x-container>
     </div>
@@ -136,7 +95,7 @@
                     <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.</p>
                     
 
-                    <a href="https://github.com/avvertix/caddy-content-negotiation/" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline">avvertix/caddy-content-negotiation ↗</a>
+                    <a href="https://github.com/avvertix/caddy-content-negotiation/" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline transition-button">avvertix/caddy-content-negotiation ↗</a>
 
                 </div>
 
@@ -144,7 +103,7 @@
                     <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">WordPress Plugin</h3>
                     <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve post content as Markdown directly from Wordpress.</p>
                     
-                    <a href="https://github.com/roots/post-content-to-markdown" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline">roots/post-content-to-markdown ↗</a>
+                    <a href="https://github.com/roots/post-content-to-markdown" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline transition-button">roots/post-content-to-markdown ↗</a>
                 </div>
 
                 <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
@@ -243,13 +202,13 @@ content-md is an open specification for optimized content exchange. Serve high-f
 
 ## Why content-md
 
-AI agents are increasingly browsing the web on behalf of humans. The web was built with humans in mind that demand quality and pleasant interaction. Agents go straight to the point and prefer a more structured approach.
+AI agents can read HTML. They shouldn't have to.
 
-Converting complex HTML pages with navigation, ads, and JavaScript into LLM-friendly plain text is both difficult and imprecise. content-md solves this at the protocol level.
+**Use tokens wisely.** Every token sent to an LLM is billed. A typical web page loaded as HTML — with navigation, scripts, and layout markup — can run to tens of thousands of tokens. This page weighs around 80 KB as HTML; as content-md, the same information fits in under 4 KB. Pure signal, no noise. At scale, the difference is significant.
 
-- Builds on your existing CMS content — no migration required
-- Standard HTTP content negotiation — the same mechanism browsers and servers have used for decades
-- YAML frontmatter + Markdown body — familiar, concise, designed to stay within AI context window limits
+**Links must survive.** The web is built on hyperlinks. Generic text extractors routinely strip them out. content-md preserves every meaningful link — so agents can follow references, discover related content, and navigate the web the same way humans do.
+
+**The creator wins.** No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page — and that intent comes through.
 
 ## Ecosystem
 

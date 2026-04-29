@@ -1,7 +1,7 @@
 <x-container class="mt-4 mb-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start agent:flex agent:flex-col">
 
-            <div class="rounded-lg overflow-hidden agent:hidden">
+            <div class="rounded-lg overflow-hidden agent:hidden shadow-2xl">
                 <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center gap-2">
                     <span class="text-xs text-zinc-400">article.md</span>
                 </div>
