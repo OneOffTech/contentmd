@@ -22,6 +22,14 @@ class GeneratePostMarkdownVariant
      */
     public function handle(Jigsaw $jigsaw)
     {
+        $baseUrl = $jigsaw->getConfig('baseUrl');
+
+        if (! $baseUrl) {
+            echo("\nTo generate markdown files, please specify a 'baseUrl' in config.php.\n\n");
+
+            return;
+        }
+
         $jigsaw->getPages()->reject(function($page, $path){
             return Str::contains($path, [
                 '.', // entries with extension are usually images, fonts or javascript 

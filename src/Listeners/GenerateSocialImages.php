@@ -20,6 +20,14 @@ class GenerateSocialImages
      */
     public function handle(Jigsaw $jigsaw)
     {
+        $baseUrl = $jigsaw->getConfig('baseUrl');
+
+        if (! $baseUrl) {
+            echo("\nTo generate a open graph images, please specify a 'baseUrl' in config.php.\n\n");
+
+            return;
+        }
+
         $manifest = json_decode($jigsaw->readOutputFile('assets/build/manifest.json'), true);
 
         if ($manifest === false || blank($manifest['source/_assets/css/main.css'] ?? null)) {
