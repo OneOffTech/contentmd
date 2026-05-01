@@ -1,5 +1,8 @@
 <?php
 
+use App\Listeners\GeneratePostMarkdownVariant;
+use App\Listeners\GenerateSitemap;
+use App\Listeners\GenerateSocialImages;
 use TightenCo\Jigsaw\Jigsaw;
 
 /** @var \Illuminate\Container\Container $container */
@@ -15,3 +18,10 @@ use TightenCo\Jigsaw\Jigsaw;
  *     // Your code here
  * });
  */
+
+// Markdown variants of blog posts for LLM use 
+$events->afterBuild([
+    GeneratePostMarkdownVariant::class,
+    GenerateSocialImages::class,
+    GenerateSitemap::class,
+]);

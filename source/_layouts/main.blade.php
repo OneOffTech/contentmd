@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{{ $page->description }}">
-        <title>{{ $page->title }}</title>
+        <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
+        <title>{{ $page->title ?? $page->siteTitle }}</title>
         @viteRefresh()
         <link rel="stylesheet" href="{{ vite('source/_assets/css/main.css') }}">
         <script defer type="module" src="{{ vite('source/_assets/js/main.js') }}"></script>
@@ -15,6 +15,38 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="Content-MD" />
         <link rel="manifest" href="/assets/site.webmanifest" />
+
+        <meta property="og:title" content="{{ $page->title ?? $page->siteTitle }}">
+
+        <meta property="og:locale" content="en_US">
+        <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
+        <meta property="og:description" content="{{ $page->description ?? $page->siteDescription }}">
+        <meta property="og:url" content="{{ $page->url($page->getUrl()) }}">
+        <meta property="og:site_name" content="OneOffTech">
+        <meta property="og:image" content="{{ $page->url($page->card?->path ?? '/assets/og/main.png') }}">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:image" content="{{ $page->url($page->card?->path ?? '/assets/og/main.png') }}">
+        <meta property="twitter:title" content="{{ $page->title ?? $page->siteTitle }}">
+
+        <script type="application/json+ld">
+        @php
+            $ld = [
+                "@context" => "https://schema.org",
+                "@type" => "WebPage",
+                "description" => $page->description ?? $page->siteDescription,
+                "headline" => $page->title ?? $page->siteTitle,
+                "url" => $page->getUrl(),
+                "image" => [
+                    "card" => "summary_large_image",
+                    "url" => $page->url($image ?? '/assets/og/main.png', true),
+                    "@type" => "imageObject",
+                ]
+            ];
+        @endphp
+
+        {!! \Illuminate\Support\Js::encode($ld) !!}
+        </script>
     </head>
     <body class="font-inter antialiased bg-white dark:bg-zinc-950 tap-highlight-accent dark:text-white ">
 

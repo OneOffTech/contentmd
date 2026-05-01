@@ -1,6 +1,9 @@
 ---
 title: content-md for Content Consumers
 description: How to serve content-md from your server — content negotiation, HTTP headers, range requests, caching, and implementation guidance for common platforms.
+card:
+  template: '_og.page'
+  path: /assets/og/consumers.png
 ---
 
 @extends('_layouts.main')

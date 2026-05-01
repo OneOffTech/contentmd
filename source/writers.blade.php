@@ -1,6 +1,9 @@
 ---
 title: content-md for writers
 description: Best practices and guidelines for writing content-md documents — how to structure frontmatter, markdown body, and custom blocks for optimal AI agent consumption.
+card:
+  template: '_og.page'
+  path: /assets/og/writers.png
 ---
 
 @extends('_layouts.main')

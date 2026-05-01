@@ -1,6 +1,9 @@
 ---
 title: content-md Reference
 description: Complete reference for the content-md specification — frontmatter fields and custom block syntax.
+card:
+  template: '_og.page'
+  path: /assets/og/reference.png
 ---
 
 @extends('_layouts.main')

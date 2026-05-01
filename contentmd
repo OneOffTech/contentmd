@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+require __DIR__.'/vendor/autoload.php';
+
+use App\Commands\HtmlShot;
+use Symfony\Component\Console\Application;
+
+$application = new Application("contentmd");
+
+// ... register commands
+
+$application->addCommand(new HtmlShot());
+
+$application->run();

@@ -1,33 +1,34 @@
 <div class="w-full h-full grid grid-cols-1 grid-rows-1 bg-gray-100 overflow-hidden">
 
     {{-- Decorative hatched boxes --}}
-    <div class="col-start-1 row-start-1 grid grid-cols-5 h-full">
+    <div class="col-start-1 row-start-1 grid grid-cols-5 h-full" style="opacity: 50%">
         <div class="col-start-2 w-52 h-52 hatch text-orange-500/40 dark:text-orange-400/40 pointer-events-none"></div>
         <div class="col-start-3 place-self-end w-52 h-52 hatch text-zinc-500/40 dark:text-zinc-400/40 pointer-events-none"></div>
         <div class="col-start-4 place-self-center w-52 h-52 line text-orange-500/40 dark:text-orange-400/40 pointer-events-none"></div>
     </div>
 
-    <div class="col-start-1 row-start-1 grid grid-cols-5 h-full  ">
-        <div style="font-size: 1.25rem;margin-top:8px;margin-left:12px;" class="text-zinc-500 font-mono leading-relaxed col-start-4 place-self-end col-span-2">
-            <p class="block" style="color: #000;">---</p>
-            <p  class="block"><span style="color: #000;display:inline-block;padding-right:0.5rem">title:</span> {{ $title ?? 'Introducing Content-md'}}</p>
-            <p  class="block whitespace-nowrap text-nowrap"><span style="color: #000;display:inline-block;padding-right:0.5rem">description:</span> {{ $description ?? 'AI agents should be first-class visitors, let\'s give them a tailored experience.' }}</p>
-            <p  class="block"><span style="color: #000;display:inline-block;padding-right:0.5rem">date:</span> {{ $date ?? '2026-04-29'}}</p>
-            <p  class="block"><span style="color: #000;display:inline-block;padding-right:0.5rem">license:</span> {{ $licence ?? 'CC-BY-4.0'}}</p>
-            <p class="block" style="color: #000;">---</p>
-        </div>
+    <div class="col-start-1 row-start-1 h-full  p-20">
+        <div style="font-size: 1.25rem" class="text-black font-mono leading-relaxed">
+<p class="block" style="color: #000;">---</p>
+<p  class="block"><span style="color:#7e22ce;display:inline-block;padding-right:0.5rem">title:</span> Introducing Content-md</p>
+<p  class="block"><span style="color:#7e22ce;display:inline-block;padding-right:0.5rem">description:</span> AI agents should be first-class visitors.</p>
+<p  class="block"><span style="color:#7e22ce;display:inline-block;padding-right:0.5rem">date:</span> 2026-04-29</p>
+<p  class="block"><span style="color:#7e22ce;display:inline-block;padding-right:0.5rem">license:</span> CC-BY-4.0</p>
+<p class="block" style="color: #000;">---</p>
+<br>
+<p class="block "><span style="color: #000;display:inline-block;padding-right:0.5rem">#</span> Introducing Content-md</p>
+<p style="margin: 0" class="block ">AI Agents are increasingly browsing the web on behalf of humans</p>
+<p style="margin: 0" class="block ">The web was built with humans in mind that demand quality and pleasant interaction.</p>
+<p style="margin: 0" class="block ">Agents go straight to the point and prefer a more structured approach.</p>
+
+            </div>
     </div>
 
     {{-- Main content --}}
     <div style="padding:5rem;" class="col-start-1 row-start-1 flex flex-col p-20 gap-8">
         <div style="flex-grow: 1" class="flex flex-col justify-around gap-4">
 
-            <div class="flex flex-col gap-4">
-
-
-                <h1 class="font-mono font-bold text-black text-6xl m-0 leading-none">{{ $title ?? 'content-md'}}</h1>
-                <p class="font-mono text-zinc-900 text-4xl text-balance m-0">{{ $description ?? 'open specification for high-fidelity textual representation'}}</p>
-            </div>
+            
 
         </div>
 
@@ -40,3 +41,4 @@
     </div>
 
 </div>
+

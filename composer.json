@@ -3,7 +3,16 @@
         "tightenco/jigsaw": "^1.8",
         "samdark/sitemap": "^2.5",
         "symfony/dom-crawler": "^7.4",
-        "avvertix/html-shot": "^0.1.0"
+        "avvertix/html-shot": "^0.1.0",
+        "symfony/css-selector": "^7.4"
+    },
+    "autoload": {
+
+        "psr-4": {
+            "App\\": "./src/",
+            "Components\\": "./components/"
+        }
+        
     },
     "scripts": {
         "post-install-cmd": "HtmlShot\\Composer\\Installer::downloadArtifact",
