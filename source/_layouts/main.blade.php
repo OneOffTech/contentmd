@@ -100,17 +100,31 @@
         {{-- Header --}}
         <header class="border-b border-zinc-100 dark:border-zinc-800 agent:hidden">
             <x-container class="flex items-center justify-between py-4">
-                <a href="/" class="inline-flex gap-1 items-center text-3xl font-mono font-medium text-zinc-950 dark:text-white hover:text-orange-600 dark:hover:text-orange-300 transition-button">
-                    <x-logo class="text-orange-600 dark:text-orange-400 size-8" />
+                <a href="/" class="inline-flex gap-1 items-center text-xl sm:text-3xl font-mono font-medium text-zinc-950 dark:text-white hover:text-orange-600 dark:hover:text-orange-300 transition-button">
+                    <x-logo class="text-orange-600 dark:text-orange-400 size-6 sm:size-8" />
                     content-md
                 </a>
-                <nav class="flex items-center gap-6 text-sm">
-                    <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
-                    <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
-                    <a href="/reference" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
-                    <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
-                        GitHub ↗
-                    </a>
+                <nav class="relative flex items-center gap-6 text-sm">
+                    <div class="hidden sm:flex items-center gap-6 ">
+                        <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
+                        <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
+                        <a href="/reference" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
+                        <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
+                            GitHub ↗
+                        </a>
+                    </div>
+                    <details class="sm:hidden agent:hidden">
+                        <summary class="transition-button cursor-pointer">Menu</summary>
+
+                        <div class="absolute w-60 bg-white shadow z-10 right-0 flex flex-col items-end gap-2 p-4">
+                            <a href="/writers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
+                            <a href="/consumers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
+                            <a href="/reference" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
+                            <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
+                                GitHub ↗
+                            </a>
+                        </div>
+                    </details>
                 </nav>
             </x-container>
         </header>
@@ -121,7 +135,7 @@
 
         {{-- Footer --}}
         <footer class="border-t border-zinc-100 dark:border-zinc-800 py-8 agent:hidden">
-            <x-container class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+            <x-container class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
                 <p>Brought you by Alessio and Gianluca, <a href="https://oneofftech.de" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-950 dark:hover:text-white transition-button">OneOff-Tech</a> and contributors.</p>
 
                 <x-oot class="text-accent-600 dark:text-zinc-200" />
@@ -129,7 +143,7 @@
         </footer>
 
         <div class="h-10 flex justify-end items-center mb-3.5">
-            <p class="font-hand">See like an AI Agent →</p>
+            <p class="font-hand whitespace-nowrap">See like an AI Agent →</p>
             <p class="w-64"></p>
         </div>
 
@@ -143,7 +157,15 @@ license: 'CC-BY-4.0'
 ---
 
 @stack('markdown')
-        </template>
+
+<nav>
+- [Write content-md]({{ $page->url('/writers') }})
+- [Read content-md]({{ $page->url('/consumers') }})
+- [Reference]({{ $page->url('/reference') }})
+- [GitHub ↗]({{ $page->github }})
+</nav>
+
+</template>
 
     </body>
 </html>
