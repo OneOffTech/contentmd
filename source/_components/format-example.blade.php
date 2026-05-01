@@ -48,12 +48,12 @@ AI Agents are increasingly browsing the web on behalf of humans...</code></pre>
             <div class="flex flex-col gap-8 agent:hidden">
                 <div>
                     <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 mb-3">YAML</span>
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Frontmatter</h3>
+                    <p class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Frontmatter</p>
                     <p class="text-sm/7 text-zinc-700 dark:text-zinc-400">Serves as an introductory summary — ~100 tokens, ~540 characters. AI agents read this first to decide if the full document is relevant before fetching it. Functions as a lightweight preflighted index.</p>
                 </div>
                 <div class="border-t border-zinc-200 dark:border-zinc-700 pt-8">
                     <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 mb-3">MD</span>
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Markdown body</h3>
+                    <p class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Markdown body</p>
                     <p class="text-sm/7 text-zinc-700 dark:text-zinc-400">CommonMark or GitHub-flavored Markdown. Must open with a first-level heading. Prefer text over images — link images and include alternate text. Preserve document hierarchy starting from level two.</p>
                 </div>
             </div>

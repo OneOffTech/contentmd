@@ -17,7 +17,7 @@
                     <div class="flex flex-col items-start gap-6">
                         <div class="w-full flex justify-between items-center">
                             <x-eyebrow>Open Specification · Draft</x-eyebrow>
-                            <div class="hidden sm:block card-industrial spec-label text-zinc-400 dark:text-zinc-600 agent:hidden" aria-hidden="true">SPEC · DRAFT · 01</div>
+                            <div class="hidden sm:block card-industrial spec-label text-zinc-500 dark:text-zinc-600 agent:hidden" aria-hidden="true">SPEC · DRAFT · 01</div>
                         </div>
                         <h1 class="text-balance text-zinc-950 dark:text-white font-black text-5xl sm:text-6xl m-0 leading-[1.05] tracking-tight max-w-4xl agent:max-w-none">The web, spoken fluently to AI agents.</h1>
                         <p class="flex max-w-2xl flex-col gap-4 text-zinc-600 dark:text-zinc-300 text-base/7">
@@ -41,12 +41,8 @@
             </x-container>
         </div>
     </div>
-
-    {{-- AI Agents can deal with html and noisy formats, should they? --}}
-
     
-    
-    <div class="pt-8">
+    <div class="pt-4">
         <x-format-example />
     </div>
 
@@ -64,12 +60,12 @@
 
                 <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
                     <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Use tokens wisely</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400">Every token sent to an LLM is billed. A typical web page loaded as HTML — with navigation, scripts, and layout markup — can run to tens of thousands of tokens. This page weighs around 80 KB as HTML; as content-md, the same information fits in under 4 KB. Pure signal, no noise. At scale, the difference is significant.</p>
+                    <p class="text-sm/5 text-zinc-600 dark:text-zinc-400">Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same information fits in under 3 KB. At scale, the difference is significant.</p>
                 </div>
 
                 <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
                     <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">The creator wins</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400">No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page — and that intent comes through.</p>
+                    <p class="text-sm/5 text-zinc-600 dark:text-zinc-400">No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page.</p>
                 </div>
 
             </div>
@@ -88,29 +84,29 @@
         </x-section>
 
         <x-container class="mb-16 mt-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 agent:flex agent:flex-col">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 agent:flex agent:flex-col">
 
-                <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Caddy Plugin</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.</p>
+                <div class="flex flex-col rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
+                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">Caddy Content Negotiation</h3>
+                    <p class="grow text-sm/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.</p>
                     
 
-                    <a href="https://github.com/avvertix/caddy-content-negotiation/" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline transition-button">avvertix/caddy-content-negotiation ↗</a>
+                    <a href="https://github.com/avvertix/caddy-content-negotiation/" target="_blank" rel="noopener" class="text-sm  hover:underline block transition-button">avvertix/caddy-content-negotiation ↗</a>
 
                 </div>
 
-                <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">WordPress Plugin</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve post content as Markdown directly from Wordpress.</p>
+                <div class="flex flex-col rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
+                    <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">WordPress Post to Markdown</h3>
+                    <p class="grow text-sm/5 text-zinc-600 dark:text-zinc-400 mb-3">Serve post content as Markdown directly from Wordpress.</p>
                     
-                    <a href="https://github.com/roots/post-content-to-markdown" target="_blank" rel="noopener" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline transition-button">roots/post-content-to-markdown ↗</a>
+                    <a href="https://github.com/roots/post-content-to-markdown" target="_blank" rel="noopener" class="text-sm  hover:underline block transition-button">roots/post-content-to-markdown ↗</a>
                 </div>
 
-                <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
+                {{-- <div class="rounded-lg p-5 bg-zinc-950/2.5 dark:bg-white/5 ring-1 ring-zinc-200 dark:ring-zinc-700">
                     <h3 class="text-sm font-semibold text-zinc-950 dark:text-white mb-2">CLI Validator</h3>
-                    <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Validate a content-md page, estimate its size and token count. Ensure you're within context window bounds before publishing.</p>
+                    <p class="text-sm/5 text-zinc-600 dark:text-zinc-400 mb-3">Validate a content-md page, estimate its size and token count. Ensure you're within context window bounds before publishing.</p>
                     <span class="spec-label inline-block px-2 py-0.5 rounded-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">In development</span>
-                </div>
+                </div> --}}
 
                 
 
@@ -133,45 +129,49 @@
         <x-container class="pb-12 mt-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 agent:flex agent:flex-col">
 
-                <div class="rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
+                <div class="flex flex-col rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
                     <div class="flex items-baseline gap-2 mb-3">
                         
-                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500">vs.</span> LLMs.txt</h3>
-                        <a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline">llmstxt.org ↗</a>
+                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. LLMs.txt</h3>
                     </div>
-                    <p class="text-sm/7 text-zinc-700 dark:text-zinc-400 mb-4">Focuses on the <strong class="text-zinc-950 dark:text-white">overall website</strong> — a single entry point listing all available content. Think of it as a sitemap.</p>
-                    <div class="flex flex-col gap-1.5 mb-4 text-xs">
-                        <div class="text-zinc-500 dark:text-zinc-400">→ Predictable URL at website root</div>
-                        <div class="text-zinc-500 dark:text-zinc-400">→ Birds-eye view of all content</div>
+                    <a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">llmstxt.org ↗</a>
+                    <div class="grow text-zinc-700 dark:text-zinc-400">
+                        <p class="text-sm/7  mb-4">Focuses on the <strong class="text-zinc-950 dark:text-white">overall website</strong> — a single entry point listing all available content. Think of it as a sitemap.</p>
+                        <div class="flex flex-col gap-1.5 mb-4 text-sm">
+                            <p>→ Predictable URL at website root</p>
+                            <p>→ Birds-eye view of all content</p>
+                        </div>
                     </div>
-                    <p class="text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">They coexist like sitemaps and pages — content-md describes individual resources.</p>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">They coexist like sitemaps and pages — content-md describes individual resources.</p>
                 </div>
 
-                <div class="rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
+                <div class="flex flex-col rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
                     <div class="flex items-baseline gap-2 mb-3">
-                        <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500">vs.</span>
-                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white">Agents.md</h3>
-                        <a href="https://agents.md/" target="_blank" rel="noopener noreferrer" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline">agents.md ↗</a>
+                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. Agents.md</h3>
                     </div>
-                    <p class="text-sm/7 text-zinc-700 dark:text-zinc-400 mb-4">Targets <strong class="text-zinc-950 dark:text-white">coding agents</strong> by providing README context within code repositories — build steps, tests, and conventions.</p>
-                    <div class="flex flex-col gap-1.5 mb-4 text-xs">
-                        <div class="text-zinc-600 dark:text-zinc-400">→ Instruct coding agents</div>
-                        <div class="text-zinc-600 dark:text-zinc-400">→ Repository-scoped</div>
-                    </div>
-                    <p class="text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md does not target coding agents. The two serve entirely different contexts.</p>
+                    <a href="https://agents.md/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">agents.md ↗</a>
+                    <diiv class="grow text-zinc-700 dark:text-zinc-400">
+                        <p class="text-sm/7 mb-4">Targets <strong class="text-zinc-950 dark:text-white">coding agents</strong> by providing README context within code repositories — build steps, tests, and conventions.</p>
+                        <div class="flex flex-col gap-1.5 mb-4 text-sm">
+                            <p>→ Instruct coding agents</p>
+                            <p>→ Repository-scoped</p>
+                        </div>
+                    </diiv>
+                    <p class="text-sm text-zinc-700 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md does not target coding agents. The two serve entirely different contexts.</p>
                 </div>
 
-                <div class="rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
+                <div class="flex flex-col rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
                     <div class="flex items-baseline gap-2 mb-3">
-                        <span class="text-xs font-semibold text-zinc-400 dark:text-zinc-500">vs.</span>
-                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white">Skills</h3>
-                        <a href="https://agentskills.io/" target="_blank" rel="noopener noreferrer" class="ml-auto text-xs text-accent-600 dark:text-accent-400 hover:underline">agentskills.io ↗</a>
+                        <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. Skills</h3>
                     </div>
-                    <p class="text-sm/7 text-zinc-700 dark:text-zinc-400 mb-4">Provides additional knowledge and a birds-eye view of available content to agents, packaged as folders.</p>
-                    <div class="flex flex-col gap-1.5 mb-4 text-xs">
-                        <div class="text-zinc-500 dark:text-zinc-400">→ Not discovered via direct URL</div>
+                    <a href="https://agentskills.io/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">agentskills.io ↗</a>
+                    <div class="grow text-zinc-700 dark:text-zinc-400">
+                        <p class="text-sm/7  mb-4">Provides additional knowledge and a birds-eye view of available content to agents, packaged as folders.</p>
+                        <div class="flex flex-col gap-1.5 mb-4 text-sm">
+                            <p>→ Not discovered via direct URL</p>
+                        </div>
                     </div>
-                    <p class="text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md responses are nearly compatible with Skills — frontmatter fields map closely.</p>
+                    <p class="text-sm text-zinc-700 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md responses are nearly compatible with Skills — frontmatter fields map closely.</p>
                 </div>
 
             </div>

@@ -5,6 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{{ $page->description ?? $page->siteDescription }}">
         <title>{{ $page->title ?? $page->siteTitle }}</title>
+
+        @php
+            $path_as_string = (string) $page->_meta->path;
+
+            $chat_url = empty($path_as_string) ? 'index.md' : $path_as_string . '.md';
+        @endphp
+
+        <link rel="alternate" type="text/markdown" href="{{ $page->url($chat_url) }}">
+
+
         @viteRefresh()
         <link rel="stylesheet" href="{{ vite('source/_assets/css/main.css') }}">
         <script defer type="module" src="{{ vite('source/_assets/js/main.js') }}"></script>
@@ -67,7 +77,7 @@
                 },
                 setAgent(val) { this.agent = val; this.applyAll() },
             }"
-            class="ignore-agent z-50 fixed bottom-3.5 right-3.5 border border-gray-300/10 bg-gray-100 dark:border-white/10 dark:bg-gray-900">
+            class="shadow-xl ignore-agent z-50 fixed bottom-3.5 right-3.5 border border-gray-600/20 bg-gray-100 dark:border-white/10 dark:bg-gray-900/50">
             <x-container class="flex items-center justify-end gap-3 py-2 text-xs agent:text-sm">
                 <span class="sr-only">Switch viewing mode</span>
                 <div class="flex items-center gap-1">
@@ -95,9 +105,9 @@
                     content-md
                 </a>
                 <nav class="flex items-center gap-6 text-sm">
-                    <a href="/reference" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
                     <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
                     <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
+                    <a href="/reference" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
                     <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
                         GitHub ↗
                     </a>
@@ -128,6 +138,8 @@
 ---
 title: '{{ $page->title }}'
 description: '{{ $page->description }}'
+date: {{ date('Y-m-d') }}
+license: 'CC-BY-4.0'
 ---
 
 @stack('markdown')
