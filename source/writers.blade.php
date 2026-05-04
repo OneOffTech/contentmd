@@ -28,7 +28,7 @@ card:
 
         The first ~100 tokens.
 
-        <x-slot name="subheadline">The frontmatter block is the first thing an AI agent reads. It decides whether to fetch the full document based on this alone — so every field matters.</x-slot>
+        <x-slot name="subheadline">The frontmatter block is the first thing an AI agent reads. It decides whether to fetch the full document based on this alone.</x-slot>
     </x-section>
 
     <x-container class="mt-4 mb-12">
@@ -105,15 +105,15 @@ card:
                 </x-card>
 
                 <x-card variant="panel" title="Use headings to create a scannable outline" size="xs">
-                    Agents scan heading structure to understand document scope before reading in full. Use <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">##</code> for main sections and <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">###</code> for subsections. Don't skip levels — jump from <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">##</code> to <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">####</code> creates a broken hierarchy.
+                    Agents scan heading structure to understand document scope before reading in full. Use <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">##</code> for main sections and <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">###</code> for subsections. Don't skip levels by jumping from <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">##</code> to <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">####</code> as it creates a broken hierarchy.
                 </x-card>
 
-                <x-card variant="panel" title="Prefer prose over tables for prose-heavy content" size="xs">
+                <x-card variant="panel" title="Prefer prose over tables for heavy content" size="xs">
                     Tables work well for reference data (fields, parameters, options). For explanatory content, plain paragraphs are lower noise and easier to embed. Don't convert prose into tables just to appear structured.
                 </x-card>
 
                 <x-card variant="panel" title="Keep the document within a reasonable token budget" size="xs">
-                    Aim for under 4,000 tokens (~16,000 characters) for most articles. Very long documents may exceed an agent's working context. If your content is long, use a <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code> block to link to related sub-pages rather than cramming everything in one file.
+                    Aim for under 4,000 tokens (~16,000 characters) for most content. Very long documents may exceed an agent's working context. If your content is long, use a <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code> block to link to related sub-pages rather than cramming everything in one file.
                 </x-card>
             </div>
 
@@ -122,7 +122,7 @@ card:
                     Binary image embeds are unusable in a text response. For decorative images, omit them. For informational images — charts, diagrams, screenshots — use a <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;figure&gt;</code> block with a description, plus a link to the original image URL.
                 </x-card>
 
-                <x-card variant="panel" title="Use a &lt;nav&gt; block for document context" size="xs">
+                <x-card variant="panel" title="Use a nav block for document context" size="xs">
                     Place a <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code> block near the top or bottom of the document (not inside section headings) linking to previous/next pages, a table of contents, or related resources. This helps agents navigate multi-page content.
                 </x-card>
 
@@ -130,8 +130,8 @@ card:
                     Always fence code samples with triple backticks and a language identifier. <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">```python</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">```bash</code>, etc. Inline code for identifiers, commands, and values. Agents use this to correctly quote and attribute code.
                 </x-card>
 
-                <x-card variant="panel" title="Avoid HTML except for content-md blocks" size="xs">
-                    Inline HTML adds noise that parsers may handle inconsistently. Reserve HTML tags for the defined content-md blocks: <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;figure&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;abstract&gt;</code>. Use standard Markdown for everything else.
+                <x-card variant="panel" title="Avoid HTML" size="xs">
+                    Inline HTML adds noise. Avoid HTML tags and prefer plain markdown variants or content-md blocks: <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;nav&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;figure&gt;</code>, <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">&lt;abstract&gt;</code>.
                 </x-card>
             </div>
 
@@ -157,11 +157,11 @@ card:
             </x-numbered-step>
 
             <x-numbered-step number="02" label="Convert" title="Strip decorative HTML">
-                Remove navigation bars, sidebars, footers, cookie banners, and ads from the body. Keep the article content. Replace <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">&lt;img&gt;</code> tags with <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">&lt;figure&gt;</code> blocks containing the alt text.
+                Remove navigation bars, sidebars, footers, cookie banners, and ads from the body. Keep the article content. Replace <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">&lt;img&gt;</code> tags with <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">&lt;figure&gt;</code> blocks containing the alternate text.
             </x-numbered-step>
 
             <x-numbered-step number="03" label="Serve" title="Use a plugin or generate on publish">
-                The WordPress and Caddy plugins handle conversion automatically. For custom stacks, generate the content-md file at publish time and serve it via content negotiation — no live conversion needed.
+                Generate the content-md file at publish time and serve it via content negotiation (e.g. Caddy module) or integrate within your content management system (e.g. Wordpress).
             </x-numbered-step>
         </x-card-grid>
     </x-container>
@@ -187,58 +187,66 @@ The `description` field is the most important signal for relevance. Aim for ~200
 
 ### Always include a date
 
-AI agents use `date` to assess freshness. Use ISO 8601: `2024-03-15`.
+AI agents use `date` to assess freshness. A guide published in 2019 may have outdated advice — agents knowing this can weight it accordingly or flag it. Use ISO 8601: `2024-03-15`.
 
 ### Declare a license
 
-Use an SPDX identifier like `CC-BY-4.0` or `CC-BY-NC-4.0`. Omitting it leaves agents without guidance on permissible use.
+The `license` field signals how your content may be used. Use an SPDX identifier like `CC-BY-4.0` or `CC-BY-NC-4.0`. Omitting it leaves agents without guidance on permissible use.
 
 ### Keep frontmatter within ~540 characters
 
-The frontmatter is designed to fit in ~100 tokens. Beyond that, it stops being a lightweight index and starts eating into the agent's context budget.
+The frontmatter is designed to fit in ~100 tokens. Beyond that, it stops being a lightweight index and starts eating into the agent's context budget unnecessarily. Keep field values concise.
 
 ## Markdown Body
 
+The Markdown body is what agents actually read and reason over. Well-structured content reduces hallucination, improves retrieval accuracy, and makes your content reliably useful.
+
 ### Open with a level-one heading
 
-The first line of the body must be an `# H1` heading matching the document title.
+The first line of the body must be an `# H1` heading matching the document title. This anchors the document hierarchy and confirms to the agent it has the right resource.
 
 ### Use headings to create a scannable outline
 
-Agents scan heading structure to understand document scope. Use `##` for main sections and `###` for subsections. Don't skip heading levels.
+Agents scan heading structure to understand document scope before reading in full. Use `##` for main sections and `###` for subsections. Don't skip levels by jumping from `##` to `####` as it creates a broken hierarchy.
+
+### Prefer prose over tables for heavy content
+
+Tables work well for reference data (fields, parameters, options). For explanatory content, plain paragraphs are lower noise and easier to embed. Don't convert prose into tables just to appear structured.
 
 ### Keep the document within a reasonable token budget
 
-Aim for under 4,000 tokens (~16,000 characters) for most articles. If your content is long, use a `<nav>` block to link to related sub-pages.
+Aim for under 4,000 tokens (~16,000 characters) for most content. Very long documents may exceed an agent's working context. If your content is long, use a `<nav>` block to link to related sub-pages rather than cramming everything in one file.
 
 ### Replace images with text descriptions
 
-For informational images, use a `<figure>` block with a description and a link to the original image URL.
+Binary image embeds are unusable in a text response. For decorative images, omit them. For informational images — charts, diagrams, screenshots — use a `<figure>` block with a description, plus a link to the original image URL.
 
 ### Use a `<nav>` block for document context
 
-Place a `<nav>` block near the top or bottom linking to previous/next pages, a table of contents, or related resources.
+Place a `<nav>` block near the top or bottom of the document (not inside section headings) linking to previous/next pages, a table of contents, or related resources. This helps agents navigate multi-page content.
 
 ### Use code blocks for all code
 
-Always fence code samples with triple backticks and a language identifier.
+Always fence code samples with triple backticks and a language identifier — ` ```python `, ` ```bash `, etc. Inline code for identifiers, commands, and values. Agents use this to correctly quote and attribute code.
 
-### Avoid HTML except for content-md blocks
+### Avoid HTML
 
-Reserve HTML tags for `<nav>`, `<figure>`, `<abstract>`. Use standard Markdown for everything else.
+Inline HTML adds noise. Avoid HTML tags and prefer plain markdown variants or content-md blocks: `<nav>`, `<figure>`, `<abstract>`.
 
 ## Converting Existing Content
 
+You don't need to rewrite your content. content-md is designed to layer on top of existing CMS content with minimal changes.
+
 ### 01 — Start with your title and excerpt
 
-Most CMS platforms already store a title, excerpt, publication date, and author. These map directly to frontmatter fields.
+Most CMS platforms already store a title, excerpt or meta description, publication date, and author. These map directly to the required and encouraged frontmatter fields with no additional writing.
 
 ### 02 — Strip decorative HTML
 
-Remove navigation, sidebars, footers, and ads. Replace `<img>` tags with `<figure>` blocks containing the alt text.
+Remove navigation bars, sidebars, footers, cookie banners, and ads from the body. Keep the article content. Replace `<img>` tags with `<figure>` blocks containing the alternate text.
 
 ### 03 — Use a plugin or generate on publish
 
-The WordPress and Caddy plugins handle conversion automatically. For custom stacks, generate the content-md file at publish time.
+Generate the content-md file at publish time and serve it via content negotiation (e.g. Caddy module) or integrate within your content management system (e.g. Wordpress).
 
 @endpush
