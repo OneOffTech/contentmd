@@ -16,7 +16,7 @@ card:
     <x-slot name="label"><x-eyebrow>For Content Consumers</x-eyebrow></x-slot>
 
     <x-slot name="description">
-        Implementation guide for serving content-md — content negotiation, response headers, range requests, caching strategy, and patterns for common server stacks.
+        Implementation guide for serving content-md: content negotiation, response headers, range requests, caching strategy, and patterns for common server stacks.
     </x-slot>
 </x-page-hero>
 
@@ -29,7 +29,7 @@ card:
         Content negotiation.
 
         <x-slot name="subheadline">
-            content-md uses the standard HTTP <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">Accept</code> header — a mechanism browsers and servers have used for decades. AI agents that know the protocol get the optimized version. Others get HTML as usual.
+            content-md uses the standard HTTP <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">Accept</code> header. AI agents that know the protocol get the optimized version. Others get HTML as usual.
         </x-slot>
     </x-section>
 
@@ -67,7 +67,7 @@ card:
 
         Signal support correctly.
 
-        <x-slot name="subheadline">A correct content-md response requires a small set of HTTP headers. Getting these right ensures agents can discover, cache, and request content-md reliably.</x-slot>
+        <x-slot name="subheadline">A correct content-md response requires a small set of HTTP headers. Get these right and agents can discover, cache, and request content-md reliably.</x-slot>
     </x-section>
 
     <x-container class="mt-4 mb-12">
@@ -143,7 +143,7 @@ card:
 
         Common patterns.
 
-        <x-slot name="subheadline">content-md works with any server that can inspect request headers and return different responses. The pattern is the same across frameworks — check the Accept header, serve the right variant.</x-slot>
+        <x-slot name="subheadline">content-md works with any server that can inspect request headers and return different responses. The pattern is the same across frameworks: check the Accept header, serve the right variant.</x-slot>
     </x-section>
 
     <x-container class="pb-12 mt-4">
@@ -178,7 +178,7 @@ card:
                 </x-card>
 
                 <x-card variant="panel" title="The Vary header is non-optional" size="xs">
-                    Without <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">Vary: Accept</code>, a CDN or proxy may serve a cached Markdown response to a browser, or vice versa. This is a common misconfiguration that breaks the experience for one audience or the other.
+                    Without <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">Vary: Accept</code>, a CDN or proxy may serve a cached Markdown response to a browser, or vice versa. This is a common misconfiguration that serves the wrong format to browsers or agents.
                 </x-card>
             </div>
         </x-card-grid>
@@ -193,7 +193,7 @@ card:
 
         Content-md is cache-friendly by design.
 
-        <x-slot name="subheadline">Text-only, no session state, no personalisation. Content-md responses are ideal CDN candidates. A well-cached content-md document costs your origin server nothing at scale.</x-slot>
+        <x-slot name="subheadline">Text-only, no session state, no personalisation. Content-md responses cache well at the CDN layer. A well-cached content-md document costs your origin server nothing at scale.</x-slot>
     </x-section>
 
     <x-container class="mb-16 mt-4">
@@ -215,7 +215,7 @@ card:
             </x-card>
 
             <x-card title="Stale-while-revalidate" size="xs">
-                Serve stale content immediately while refreshing in the background for zero-latency updates.
+                Serve stale content immediately while refreshing in the background.
                 <div class="rounded bg-zinc-950 p-3 font-mono text-xs text-zinc-100 mt-3">
                     Cache-Control: max-age=3600,<br>&nbsp;stale-while-revalidate=86400
                 </div>
@@ -233,9 +233,9 @@ card:
 
 # content-md for Content Consumers
 
-Implementation guide for serving content-md — content negotiation, response headers, range requests, caching strategy, and patterns for common server stacks.
+Implementation guide for serving content-md: content negotiation, response headers, range requests, caching strategy, and patterns for common server stacks.
 
-## How It Works — Content Negotiation
+## How it works: content negotiation
 
 content-md uses the standard HTTP `Accept` header. AI agents that know the protocol get the optimized version. Others get HTML as usual.
 
@@ -277,11 +277,11 @@ If the agent requests `text/markdown` only and no variant exists, return `406 No
 
 ### The Vary header is non-optional
 
-Without `Vary: Accept`, a CDN or proxy may serve a cached Markdown response to a browser, or vice versa.
+Without `Vary: Accept`, a CDN or proxy may serve a cached Markdown response to a browser, or vice versa. This is a common misconfiguration that serves the wrong format to browsers or agents.
 
 ## Caching
 
-Content-md is cache-friendly by design — text-only, no session state, no personalisation.
+Content-md is cache-friendly by design. Text-only, no session state, no personalisation. Content-md responses cache well at the CDN layer. A well-cached content-md document costs your origin server nothing at scale.
 
 - **Stable content**: `Cache-Control: max-age=604800` (7 days)
 - **Frequently updated**: `Cache-Control: max-age=3600` (1 hour)
