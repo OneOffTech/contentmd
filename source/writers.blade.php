@@ -89,7 +89,7 @@ card:
                         <span class="text-xs text-zinc-400">Good frontmatter</span>
                         <span class="text-xs text-emerald-400">✓</span>
                     </div>
-                    <div class="bg-zinc-950 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
+                    <div class="bg-zinc-950 dark:bg-zinc-900 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
 <span class="text-zinc-500">---</span><br>
 <span class="text-purple-400">title:</span>       <span class="text-yellow-300">How to Set Up PostgreSQL Connection Pooling with PgBouncer</span><br>
 <span class="text-purple-400">description:</span> <span class="text-yellow-300">Step-by-step guide to installing and</span><br>
@@ -105,7 +105,7 @@ card:
                         <span class="text-xs text-zinc-400">Avoid</span>
                         <span class="text-xs text-red-400">✗</span>
                     </div>
-                    <div class="bg-zinc-950 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
+                    <div class="bg-zinc-950  dark:bg-zinc-900 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
 <span class="text-zinc-500">---</span><br>
 <span class="text-purple-400">title:</span>       <span class="text-red-400">PgBouncer</span><br>
 <span class="text-purple-400">description:</span> <span class="text-red-400">A post about database connection pooling.</span><br>

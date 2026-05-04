@@ -135,14 +135,14 @@
                         <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. LLMs.txt</h3>
                     </div>
                     <a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">llmstxt.org ↗</a>
-                    <div class="grow text-zinc-700 dark:text-zinc-400">
+                    <div class="grow text-zinc-700 dark:text-zinc-100">
                         <p class="text-sm/7  mb-4">Focuses on the <strong class="text-zinc-950 dark:text-white">overall website</strong> — a single entry point listing all available content. Think of it as a sitemap.</p>
                         <div class="flex flex-col gap-1.5 mb-4 text-sm">
                             <p>→ Predictable URL at website root</p>
                             <p>→ Birds-eye view of all content</p>
                         </div>
                     </div>
-                    <p class="text-sm text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">They coexist like sitemaps and pages — content-md describes individual resources.</p>
+                    <p class="text-sm text-zinc-600 dark:text-zinc-100 border-t border-zinc-200 dark:border-zinc-600 pt-3">They coexist like sitemaps and pages — content-md describes individual resources.</p>
                 </div>
 
                 <div class="flex flex-col rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
@@ -150,14 +150,14 @@
                         <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. Agents.md</h3>
                     </div>
                     <a href="https://agents.md/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">agents.md ↗</a>
-                    <diiv class="grow text-zinc-700 dark:text-zinc-400">
+                    <diiv class="grow text-zinc-700 dark:text-zinc-100">
                         <p class="text-sm/7 mb-4">Targets <strong class="text-zinc-950 dark:text-white">coding agents</strong> by providing README context within code repositories — build steps, tests, and conventions.</p>
                         <div class="flex flex-col gap-1.5 mb-4 text-sm">
                             <p>→ Instruct coding agents</p>
                             <p>→ Repository-scoped</p>
                         </div>
                     </diiv>
-                    <p class="text-sm text-zinc-700 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md does not target coding agents. The two serve entirely different contexts.</p>
+                    <p class="text-sm text-zinc-700 dark:text-zinc-100 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md does not target coding agents. The two serve entirely different contexts.</p>
                 </div>
 
                 <div class="flex flex-col rounded-lg p-6 bg-white/50 dark:bg-white/10 ring-1 ring-zinc-300 dark:ring-zinc-500">
@@ -165,13 +165,13 @@
                         <h3 class="text-base font-semibold text-zinc-950 dark:text-white"><span class="sr-only">Content-md</span> vs. Skills</h3>
                     </div>
                     <a href="https://agentskills.io/" target="_blank" rel="noopener noreferrer" class="mb-3 block text-sm transition-button hover:underline">agentskills.io ↗</a>
-                    <div class="grow text-zinc-700 dark:text-zinc-400">
+                    <div class="grow text-zinc-700 dark:text-zinc-100">
                         <p class="text-sm/7  mb-4">Provides additional knowledge and a birds-eye view of available content to agents, packaged as folders.</p>
                         <div class="flex flex-col gap-1.5 mb-4 text-sm">
                             <p>→ Not discovered via direct URL</p>
                         </div>
                     </div>
-                    <p class="text-sm text-zinc-700 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md responses are nearly compatible with Skills — frontmatter fields map closely.</p>
+                    <p class="text-sm text-zinc-700 dark:text-zinc-100 border-t border-zinc-200 dark:border-zinc-600 pt-3">content-md responses are nearly compatible with Skills — frontmatter fields map closely.</p>
                 </div>
 
             </div>

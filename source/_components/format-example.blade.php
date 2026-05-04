@@ -5,7 +5,7 @@
                 <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center gap-2">
                     <span class="text-xs text-zinc-400">article.md</span>
                 </div>
-                <div class="bg-zinc-950 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
+                <div class="bg-zinc-950 dark:bg-zinc-900 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
 <span class="text-zinc-500">---</span><br>
 <span class="text-purple-400">title:</span>       <span class="text-yellow-300">Introducing Content-md</span><br>
 <span class="text-purple-400">description:</span> <span class="text-yellow-300">AI agents should be first-class visitors,</span><br>
