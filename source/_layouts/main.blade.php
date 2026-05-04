@@ -111,7 +111,7 @@
                     <div class="hidden sm:flex items-center gap-6 ">
                         <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
                         <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
-                        <a href="/reference" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
+                        <a href="/specification" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Specification</a>
                         <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
                             GitHub ↗
                         </a>
@@ -122,7 +122,7 @@
                         <div class="absolute w-60 bg-white dark:bg-zinc-950 shadow z-10 right-0 flex flex-col items-end gap-2 p-4">
                             <a href="/writers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
                             <a href="/consumers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
-                            <a href="/reference" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Reference</a>
+                            <a href="/specification" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Specification</a>
                             <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
                                 GitHub ↗
                             </a>

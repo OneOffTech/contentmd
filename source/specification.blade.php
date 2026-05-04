@@ -1,6 +1,6 @@
 ---
-title: content-md Reference
-description: Complete reference for the content-md specification — frontmatter fields and custom block syntax.
+title: content-md Specification
+description: Content-md specification with frontmatter fields and custom block syntax.
 card:
   template: '_og.page'
   path: /assets/og/reference.png
@@ -225,7 +225,7 @@ We present a novel approach to serving web content to AI agents...
 
 @push('markdown')
 
-# content-md Reference
+# content-md Specification
 
 Complete reference for the content-md document format — frontmatter fields, markdown body rules, and custom block syntax.
 
