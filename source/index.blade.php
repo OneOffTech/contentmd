@@ -47,7 +47,7 @@
 
     <x-container class="mb-16 mt-4">
         <x-card-grid>
-            <x-card title="Use tokens wisely">Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same information fits in under 3 KB. At scale, the difference is significant.</x-card>
+            <x-card title="Use tokens wisely">Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same content fits in under 3 KB.</x-card>
             <x-card title="The creator wins">No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page.</x-card>
         </x-card-grid>
     </x-container>
@@ -89,16 +89,16 @@
     <x-container class="pb-12 mt-8">
         <x-card-grid cols="3">
             <x-comparison-card versus="LLMs.txt" href="https://llmstxt.org/" link="llmstxt.org">
-                <p class="text-sm/7 mb-4">Focuses on the <strong class="text-zinc-950 dark:text-white">overall website</strong> — a single entry point listing all available content. Think of it as a sitemap.</p>
+                <p class="text-sm/7 mb-4">Covers the <strong class="text-zinc-950 dark:text-white">whole website</strong>: one URL listing everything available. Think of it as a sitemap.</p>
                 <div class="flex flex-col gap-1.5 mb-4 text-sm">
                     <p>→ Predictable URL at website root</p>
                     <p>→ Birds-eye view of all content</p>
                 </div>
-                <x-slot name="footer">They coexist like sitemaps and pages — content-md describes individual resources.</x-slot>
+                <x-slot name="footer">They coexist like sitemaps and pages. content-md describes individual resources.</x-slot>
             </x-comparison-card>
 
             <x-comparison-card versus="Agents.md" href="https://agents.md/" link="agents.md">
-                <p class="text-sm/7 mb-4">Targets <strong class="text-zinc-950 dark:text-white">coding agents</strong> by providing README context within code repositories — build steps, tests, and conventions.</p>
+                <p class="text-sm/7 mb-4">Targets <strong class="text-zinc-950 dark:text-white">coding agents</strong> with README context for code repositories: build steps, tests, conventions.</p>
                 <div class="flex flex-col gap-1.5 mb-4 text-sm">
                     <p>→ Instruct coding agents</p>
                     <p>→ Repository-scoped</p>
@@ -111,7 +111,7 @@
                 <div class="flex flex-col gap-1.5 mb-4 text-sm">
                     <p>→ Not discovered via direct URL</p>
                 </div>
-                <x-slot name="footer">content-md responses are nearly compatible with Skills — frontmatter fields map closely.</x-slot>
+                <x-slot name="footer">content-md responses are nearly compatible with Skills; the frontmatter fields map closely.</x-slot>
             </x-comparison-card>
         </x-card-grid>
     </x-container>
@@ -140,7 +140,7 @@ content-md is an open specification for high-fidelity textual representation for
 
 AI agents can read HTML or complex formats. Time and tokens set the rules.
 
-**Use tokens wisely.** Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same information fits in under 3 KB. At scale, the difference is significant.
+**Use tokens wisely.** Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same content fits in under 3 KB.
 
 **The creator wins.** No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page.
 
@@ -155,15 +155,15 @@ Tools & plugins. These tools help you start serving content-md without building 
 
 ### vs LLMs.txt
 
-LLMs.txt focuses on the overall website — a single entry point listing all available content. They coexist like sitemaps and pages — content-md describes individual resources.
+LLMs.txt covers the whole website: one URL listing everything available. They coexist like sitemaps and pages. content-md describes individual resources.
 
 ### vs Agents.md
 
-Agents.md targets coding agents by providing README context within code repositories. content-md does not target coding agents. The two serve entirely different contexts.
+Agents.md targets coding agents with README context for code repositories: build steps, tests, conventions. content-md does not target coding agents — the two serve entirely different purposes.
 
 ### vs Skills
 
-Skills provides additional knowledge to agents, currently within dedicated folders. content-md responses are nearly compatible with Skills — frontmatter fields map closely.
+Skills provides additional knowledge to agents, currently within dedicated folders. content-md responses are nearly compatible with Skills; the frontmatter fields map closely.
 
 <nav>
 - [Reference — frontmatter fields and custom block syntax](/reference)
