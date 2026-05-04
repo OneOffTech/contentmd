@@ -28,7 +28,7 @@ card:
 
         YAML frontmatter, Markdown body.
 
-        <x-slot name="subheadline">content-md starts with a YAML frontmatter block providing context (~100 tokens), followed by a Markdown document. Familiar, concise, and designed to stay within AI context window limits.</x-slot>
+        <x-slot name="subheadline">content-md starts with a YAML frontmatter block (~100 tokens) followed by a Markdown document. Designed to fit within typical AI context windows.</x-slot>
     </x-section>
 
     <x-format-example />
@@ -135,7 +135,7 @@ card:
 
         Navigation, figures, and more.
 
-        <x-slot name="subheadline">content-md proposes custom blocks to include navigation affordances, image descriptions, formal abstracts, and advertising. AI agents may choose to skip advertisement blocks.</x-slot>
+        <x-slot name="subheadline">content-md adds a few custom blocks: navigation links, image descriptions, formal abstracts, and ads. AI agents can skip the ad blocks.</x-slot>
     </x-section>
 
     <x-container class="mb-16 mt-4">
@@ -165,7 +165,7 @@ card:
                     <code class="text-xs font-medium px-2 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300">&lt;figure&gt;</code>
                     <span class="text-sm font-semibold text-zinc-950 dark:text-white">Image (alternate)</span>
                 </div>
-                <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Signal an image is present using its alternate text or caption instead of a binary embed.</p>
+                <p class="text-xs/5 text-zinc-600 dark:text-zinc-400 mb-3">Include an image's alt text or caption in place of the binary.</p>
                 <div class="rounded bg-zinc-950 p-3 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto agent:hidden">
 <span class="text-emerald-400">&lt;figure&gt;</span><br>
 Alternate text describing the image<br>
@@ -231,11 +231,11 @@ Complete reference for the content-md document format — frontmatter fields, ma
 
 ## The Format
 
-content-md starts with a YAML frontmatter block providing context (~100 tokens), followed by a Markdown document.
+content-md starts with a YAML frontmatter block (~100 tokens) followed by a Markdown document.
 
 ### Frontmatter
 
-Serves as an introductory summary — ~100 tokens, ~540 characters. AI agents read this first to decide if the full document is relevant before fetching it. Functions as a lightweight preflighted index.
+An introductory summary: ~100 tokens, ~540 characters. AI agents read this first to decide whether to fetch the full document. A lightweight content index.
 
 ### Markdown body
 
@@ -255,7 +255,7 @@ Fields map to Dublin Core, schema.org CreativeWork, and standard HTML meta equiv
 
 ## Custom Blocks
 
-content-md proposes custom blocks to include navigation affordances, image descriptions, formal abstracts, and advertising. AI agents may choose to skip advertisement blocks.
+content-md adds a few custom blocks: navigation links, image descriptions, formal abstracts, and ads. AI agents can skip the ad blocks.
 
 ### Navigation
 
@@ -270,7 +270,7 @@ Communicate website navigation or linked resources relevant to the content.
 
 ### Image (alternate)
 
-Signal an image is present using its alternate text or caption instead of a binary embed.
+Include an image's alt text or caption in place of the binary.
 
 ```
 <figure>
