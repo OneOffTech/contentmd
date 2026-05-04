@@ -134,26 +134,22 @@
 
 Open Specification · Draft
 
-content-md is an open specification for optimized content exchange. Serve high-fidelity textual representation to AI agents through standard HTTP content negotiation — no scraping required.
+content-md is an open specification for high-fidelity textual representation for AI agents.
 
 ## Why content-md
 
-AI agents can read HTML. They shouldn't have to.
+AI agents can read HTML or complex formats. Time and tokens set the rules.
 
-**Use tokens wisely.** Every token sent to an LLM is billed. A typical web page loaded as HTML — with navigation, scripts, and layout markup — can run to tens of thousands of tokens. This page weighs around 80 KB as HTML; as content-md, the same information fits in under 4 KB. Pure signal, no noise. At scale, the difference is significant.
+**Use tokens wisely.** Every token sent to an LLM is billed. A typical web page with navigation and layout markup can run to tens of thousands of tokens. This page weighs around 40 KB as HTML; as content-md, the same information fits in under 3 KB. At scale, the difference is significant.
 
-**Links must survive.** The web is built on hyperlinks. Generic text extractors routinely strip them out. content-md preserves every meaningful link — so agents can follow references, discover related content, and navigate the web the same way humans do.
-
-**The creator wins.** No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page — and that intent comes through.
+**The creator wins.** No scraper knows your content better than you do. Automatically converted HTML loses context, collapses structure, and makes wrong guesses. content-md is authored by the people who wrote the page.
 
 ## Ecosystem
 
-The content-md ecosystem is growing. All tools are currently in development.
+Tools & plugins. These tools help you start serving content-md without building from scratch.
 
-- **WordPress Plugin**: Return content-md versions of articles and pages with zero configuration.
-- **Caddy Plugin**: Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.
-- **Markdown Parsers**: Parser plugins for popular libraries to handle content-md custom blocks: `<nav>`, `<figure>`, `<abstract>`.
-- **CLI Validator**: Validate a content-md page, estimate its size and token count.
+- **Caddy Content Negotiation**: Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in. [avvertix/caddy-content-negotiation](https://github.com/avvertix/caddy-content-negotiation/)
+- **WordPress Post to Markdown**: Serve post content as Markdown directly from Wordpress. [roots/post-content-to-markdown](https://github.com/roots/post-content-to-markdown)
 
 ## Comparison
 
