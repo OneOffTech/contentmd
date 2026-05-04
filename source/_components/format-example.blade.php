@@ -8,8 +8,9 @@
                 <div class="bg-zinc-950 dark:bg-zinc-900 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
 <span class="text-zinc-500">---</span><br>
 <span class="text-purple-400">title:</span>       <span class="text-yellow-300">Introducing Content-md</span><br>
-<span class="text-purple-400">description:</span> <span class="text-yellow-300">AI agents should be first-class visitors,</span><br>
-<span class="text-yellow-300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; let's give them a tailored experience.</span><br>
+<span class="text-purple-400">description:</span> <span class="text-zinc-400">&gt;-</span><br>
+<span class="text-yellow-300">&nbsp;&nbsp;AI agents should be first-class visitors,</span><br>
+<span class="text-yellow-300">&nbsp;&nbsp;let's give them a tailored experience.</span><br>
 <span class="text-purple-400">date:</span>        <span class="text-yellow-300">2026-04-29</span><br>
 <span class="text-purple-400">author:</span>      <span class="text-yellow-300">Alessio</span><br>
 <span class="text-purple-400">license:</span>     <span class="text-yellow-300">CC-BY-4.0</span><br>
@@ -32,8 +33,9 @@
 
             <div class="hidden agent:block prose prose-zinc dark:prose-invert max-w-none">
                 <pre><code>---
-description: AI agents must be considered as first-class visitors,
-            let's give them a tailored experience.
+description: >-
+  AI agents must be considered as first-class visitors,
+  let's give them a tailored experience.
 title:       Introducing Content-md
 date:        2024-01-15
 author:      Jane Smith

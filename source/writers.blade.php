@@ -60,10 +60,10 @@ card:
                 <div class="bg-zinc-950 dark:bg-zinc-900 p-5 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto">
 <span class="text-zinc-500">---</span><br>
 <span class="text-purple-400">title:</span>       <span class="text-yellow-300">How to Set Up PostgreSQL Connection Pooling with PgBouncer</span><br>
-<span class="text-purple-400">description:</span> <span class="text-yellow-300">Step-by-step guide to installing and</span><br>
-<span class="text-yellow-300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; configuring PgBouncer for transaction-mode</span><br>
-<span class="text-yellow-300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pooling on Ubuntu. Covers pool_mode,</span><br>
-<span class="text-yellow-300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; max_client_conn, and auth_type settings.</span><br>
+<span class="text-purple-400">description:</span> <span class="text-zinc-400">&gt;-</span><br>
+<span class="text-yellow-300">&nbsp;&nbsp;Step-by-step guide to installing and configuring PgBouncer</span><br>
+<span class="text-yellow-300">&nbsp;&nbsp;for transaction-mode pooling on Ubuntu. Covers pool_mode,</span><br>
+<span class="text-yellow-300">&nbsp;&nbsp;max_client_conn, and auth_type settings.</span><br>
 <span class="text-purple-400">date:</span>        <span class="text-yellow-300">2024-11-02</span><br>
 <span class="text-purple-400">author:</span>      <span class="text-yellow-300">Maria López</span><br>
 <span class="text-purple-400">license:</span>     <span class="text-yellow-300">CC-BY-4.0</span><br>
