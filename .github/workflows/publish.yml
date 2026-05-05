@@ -64,18 +64,7 @@ jobs:
           retention-days: 2
       
       - name: Output artifact ID
+        environment:
+          name: website
+          url: 'https://contentmd.org' 
         run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
-
-  # Deployment job
-  deploy:
-    environment:
-      name: website
-      url: 'https://contentmd.org' 
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy
-        id: deployment
-        # ${{ steps.deployment.outputs.page_url }}
-        run: |
-          ls -lah
