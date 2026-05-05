@@ -21,7 +21,7 @@
     </x-slot>
 
     <x-slot name="extra">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 agent:hidden">
             <div class="flex -space-x-1">
                 <a href="https://www.linkedin.com/in/alessio-vertemati-b1b60244/" target="_blank" rel="noopener noreferrer" class="group relative block size-8 shrink-0">
                     <img src="/assets/images/team/alessio.jpg" alt="Alessio" class="block size-8 rounded-full object-cover ring-2 ring-orange-50 transition-all relative">

@@ -1,4 +1,4 @@
-<x-container class="mt-4 mb-8">
+<x-container class="mt-4 mb-8 agent:mt-0 agent:mb-0">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start agent:flex agent:flex-col">
 
             <div class="rounded-lg overflow-hidden agent:hidden shadow-2xl">

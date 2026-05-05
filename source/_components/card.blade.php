@@ -13,11 +13,11 @@ $sizeClass = match($size ?? 'sm') {
     default => 'text-sm/5',
 };
 @endphp
-<div class="flex flex-col rounded-lg p-5 {{ $bgClasses }}">
+<div class="flex flex-col rounded-lg p-5 agent:p-0 {{ $bgClasses }}">
     @if (!empty($title ?? ''))
-    <div class="flex items-center gap-2 mb-2">
+    <div class="flex items-center gap-2 mb-2 agent:items-start">
         @if (!empty($badge ?? ''))
-        <span class="inline-block text-xs font-medium px-2 py-0.5 rounded-full {{ $badgeClasses }}">{{ ucfirst($badge) }}</span>
+        <span class=" inline-block agent:hidden text-xs font-medium px-2 py-0.5 rounded-full {{ $badgeClasses }}">{{ ucfirst($badge) }}</span>
         @endif
         <h3 class="text-sm font-semibold text-zinc-950 dark:text-white">{{ $title }}</h3>
     </div>

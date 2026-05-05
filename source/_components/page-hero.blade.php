@@ -6,7 +6,7 @@
         {{ $decoration ?? '' }}
     </div>
 
-    <div class="relative mt-8 pb-12 col-start-1 row-start-1">
+    <div class="relative mt-8 pb-12 col-start-1 row-start-1 agent:pb-0">
         <x-container class="mb-6">
             <div class="flex flex-col gap-6">
                 <div class="flex flex-col items-start gap-6">

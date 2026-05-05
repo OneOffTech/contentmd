@@ -265,7 +265,7 @@ html[data-agent] {
 }
 
 /* Strip all decorative CSS from every element */
-html[data-agent] * {
+html[data-agent] *:not(.ignore-agent) {
   font-family: inherit;
   background-image: none !important;
   box-shadow: none !important;
@@ -297,6 +297,7 @@ html[data-agent] nav {
 }
 
 html[data-agent] header svg,
+html[data-agent] .ignore-agent svg,
 html[data-agent] nav svg {
   display: revert !important;
 }
@@ -413,111 +414,6 @@ html[data-agent] [data-agent-content] {
   display: block !important;
 }
 
-/* ── .ignore-agent: opt an element and its descendants out of agent rendering ─
-   Add class="ignore-agent" to any container to preserve its normal visual
-   rendering in agent mode. All agent-mode overrides are reverted.
-   ──────────────────────────────────────────────────────────────────────────── */
-html[data-agent] .ignore-agent,
-html[data-agent] .ignore-agent * {
-  font-family: revert;
-  background-image: revert !important;
-  background-color: revert;
-  box-shadow: revert !important;
-  text-shadow: revert !important;
-  border-color: revert !important;
-  border-radius: revert !important;
-  color: revert;
-}
-
-html[data-agent] .ignore-agent svg,
-html[data-agent] .ignore-agent img,
-html[data-agent] .ignore-agent picture,
-html[data-agent] .ignore-agent video,
-html[data-agent] .ignore-agent iframe,
-html[data-agent] .ignore-agent [aria-hidden="true"],
-html[data-agent] .ignore-agent [role="presentation"] {
-  display: revert !important;
-}
-
-html[data-agent] .ignore-agent h1::before,
-html[data-agent] .ignore-agent h2::before,
-html[data-agent] .ignore-agent h3::before,
-html[data-agent] .ignore-agent h4::before,
-html[data-agent] .ignore-agent h5::before,
-html[data-agent] .ignore-agent h6::before {
-  content: none;
-}
-
-html[data-agent] .ignore-agent h1,
-html[data-agent] .ignore-agent h2,
-html[data-agent] .ignore-agent h3,
-html[data-agent] .ignore-agent h4,
-html[data-agent] .ignore-agent h5,
-html[data-agent] .ignore-agent h6 {
-  font-size: revert;
-  font-weight: revert;
-  margin: revert;
-}
-
-html[data-agent] .ignore-agent a[href]::after,
-html[data-agent] .ignore-agent a[aria-current]::before {
-  content: none;
-}
-
-html[data-agent] .ignore-agent ul {
-  list-style: revert;
-  padding-left: revert;
-}
-
-html[data-agent] .ignore-agent ul > li::before {
-  content: none;
-}
-
-html[data-agent] .ignore-agent blockquote > p::before {
-  content: none;
-}
-
-html[data-agent] .ignore-agent :not(pre) > code::before,
-html[data-agent] .ignore-agent :not(pre) > code::after {
-  content: none;
-}
-
-html[data-agent] .ignore-agent pre::before,
-html[data-agent] .ignore-agent pre::after {
-  content: none;
-}
-
-html[data-agent] .ignore-agent hr {
-  display: revert;
-  border: revert !important;
-}
-
-html[data-agent] .ignore-agent hr::before {
-  content: none;
-}
-
-
-/* ─── Agent suggestions thinking animation ────────────────────────────────── */
-
-@keyframes agent-thinking-dot {
-  0%, 80%, 100% {
-    opacity: 0.3;
-    transform: translateY(0);
-  }
-  40% {
-    opacity: 1;
-    transform: translateY(-4px);
-  }
-}
-
-.agent-thinking-dot {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 9999px;
-  background-color: currentColor;
-  animation: agent-thinking-dot 1.4s ease-in-out infinite;
-}
 
 
 /* ─── Hit area utilities (via shadcn registry) ────────────────────────────────
@@ -742,30 +638,4 @@ html[data-agent] .ignore-agent hr::before {
   line-height: 1;
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
-}
-
-/* Thin rule separator with corner tick marks */
-.rule-industrial {
-  position: relative;
-  border-top: 1px solid;
-}
-
-.rule-industrial::before,
-.rule-industrial::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  width: 5px;
-  height: 5px;
-  border-top: 1px solid currentColor;
-}
-
-.rule-industrial::before {
-  left: 0;
-  border-left: 1px solid currentColor;
-}
-
-.rule-industrial::after {
-  right: 0;
-  border-right: 1px solid currentColor;
 }

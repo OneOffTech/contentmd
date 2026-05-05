@@ -77,22 +77,18 @@
                 },
                 setAgent(val) { this.agent = val; this.applyAll() },
             }"
-            class="shadow-xl ignore-agent z-50 fixed bottom-3.5 right-3.5 border border-zinc-600/20 bg-zinc-100 dark:border-white/10 dark:bg-zinc-900">
-            <div class="px-4 flex items-center justify-end gap-3 py-2 text-xs agent:text-sm">
+            class="ignore-agent shadow-xl z-50 fixed bottom-3.5 right-3.5 border border-zinc-600/20 bg-zinc-100! dark:border-white/10 dark:bg-zinc-900!">
+            <div class="px-4 flex items-center justify-end gap-3 py-2 text-xs">
                 <span class="sr-only">Switch viewing mode</span>
                 <div class="flex items-center gap-1">
-                    <button @click="setAgent(false)" class=" ignore-agent hit-area-y-2 flex items-center gap-1.5 rounded px-2 py-1 text-zinc-600 hover:text-accent-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/10 transition" :class="{ 'text-accent-600 font-medium': !agent }">
-                        <span class="inline-flex w-3.5 h-3.5 rounded-sm border! border-current items-center justify-center">
-                            <svg x-show="!agent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="currentColor" class="w-2.5 h-2.5"><path d="M10 3L5 8.5 2 5.5l-.8.8L5 10.1 10.8 3.8z"/></svg>
-                        </span>
+                    <x-ghost-button @click="setAgent(false)" class="hit-area-y-2 gap-1.5 rounded [[data-active]_&]:text-orange-700! [[data-active]_&]:agent:text-orange-700!" x-bind:data-active="!agent">
+                        <span class="ignore-agent inline-flex [[data-active]_&]:bg-current w-3.5 h-3.5 rounded-sm border! border-current items-center justify-center"></span>
                         Human
-                    </button>
-                    <button @click="setAgent(true)" class=" ignore-agent hit-area-y-2 flex items-center gap-1.5 rounded px-2 py-1 text-zinc-600 hover:text-accent-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/10 transition" :class="{ 'text-accent-600 font-medium': agent }">
-                        <span class="inline-flex w-3.5 h-3.5 rounded-sm border! border-current items-center justify-center">
-                            <svg x-show="agent" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="currentColor" class="w-2.5 h-2.5"><path d="M10 3L5 8.5 2 5.5l-.8.8L5 10.1 10.8 3.8z"/></svg>
-                        </span>
+                    </x-ghost-button>
+                    <x-ghost-button @click="setAgent(true)" class="hit-area-y-2 gap-1.5 rounded [[data-active]_&]:text-orange-700! [[data-active]_&]:agent:text-orange-700!"  x-bind:data-active="agent">
+                        <span class="ignore-agent inline-flex [[data-active]_&]:bg-current w-3.5 h-3.5 rounded-sm border! border-current items-center justify-center"></span>
                         Agent
-                    </button>
+                    </x-ghost-button>
                 </div>
                 <div class=" ignore-agent">
                     <x-copy-as-markdown-button />
@@ -102,13 +98,13 @@
 
         {{-- Header --}}
         <header class="border-b border-zinc-100 dark:border-zinc-800 agent:hidden">
-            <x-container class="flex items-center justify-between py-4">
+            <x-container class="flex items-center justify-between py-4 agent:flex-col agent:items-start agent:gap-4">
                 <a href="/" class="inline-flex gap-1 items-center text-xl sm:text-3xl font-mono font-medium text-zinc-950 dark:text-white hover:text-orange-600 dark:hover:text-orange-300 transition-button">
                     <x-logo class="text-orange-600 dark:text-orange-400 size-6 sm:size-8" />
                     content-md
                 </a>
-                <nav class="relative flex items-center gap-6 text-sm">
-                    <div class="hidden sm:flex items-center gap-6 ">
+                <nav class="relative flex items-center gap-6 text-sm  agent:flex-col agent:items-start">
+                    <div class="hidden sm:flex items-center gap-6 agent:flex-col agent:flex agent:items-start agent:gap-3">
                         <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
                         <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
                         <a href="/specification" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Specification</a>
