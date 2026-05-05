@@ -9,7 +9,7 @@ Content-md synthesizes the current practices of structuring the markdown represe
 - **[Documentation](https://contentmd.org)** — Motivation, guides and tutorials
 - **[Specification](https://contentmd.org/specification)** — Format details
 
-This repo contains the specification, documentation, and reference SDK.
+This repo contains the specification, documentation, and reference guides.
 
 ## About
 
@@ -17,4 +17,4 @@ Content-md is an open specification maintained by [OneOffTech](https://oneofftec
 
 ## License
 
-Code in this repository is licensed under [Apache 2.0](LICENSE). Documentation is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
+Code in this repository is licensed under [Apache 2.0](LICENSE.md). Documentation is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
