@@ -43,7 +43,7 @@ jobs:
           coverage: none
 
       - name: Composer install
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v4"
 
       - name: JS install
         run: |
@@ -56,9 +56,15 @@ jobs:
 
       
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-artifact@v7
+        id: artifact-upload-step
         with:
+          name: website
           path: build_production/
+          retention-days: 2
+      
+      - name: Output artifact ID
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
 
   # Deployment job
   deploy:
