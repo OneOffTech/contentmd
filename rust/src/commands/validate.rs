@@ -6,8 +6,8 @@ use crate::output::{Check, OutputFormat, ValidationReport, print_validation_repo
 use crate::parser::{self, Frontmatter};
 use crate::tokens;
 
-pub async fn run(url: &str, format: &str, save: Option<&str>) -> Result<(), String> {
-    let client = HttpClient::new();
+pub async fn run(url: &str, format: &str, save: Option<&str>, follow_redirect: bool) -> Result<(), String> {
+    let client = HttpClient::new(follow_redirect);
 
     let md_result = client.fetch_markdown(url).await?;
     let html_result = client.fetch_html(url).await.ok();

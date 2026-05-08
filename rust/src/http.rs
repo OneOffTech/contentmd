@@ -16,9 +16,15 @@ pub struct HttpClient {
 }
 
 impl HttpClient {
-    pub fn new() -> Self {
+    pub fn new(follow_redirects: bool) -> Self {
+        let redirect_policy = if follow_redirects {
+            reqwest::redirect::Policy::limited(10)
+        } else {
+            reqwest::redirect::Policy::none()
+        };
         let client = Client::builder()
             .user_agent("contentmd-cli/0.1 (content-md validator; https://content-md.org)")
+            .redirect(redirect_policy)
             .build()
             .expect("failed to build HTTP client");
         Self { client }
@@ -32,7 +38,7 @@ impl HttpClient {
             .send()
             .await
             .map_err(|e| e.to_string())?;
-        self.process_response(url, resp).await
+        self.process_response(resp).await
     }
 
     pub async fn fetch_frontmatter_only(&self, url: &str) -> Result<FetchResult, String> {
@@ -44,7 +50,7 @@ impl HttpClient {
             .send()
             .await
             .map_err(|e| e.to_string())?;
-        self.process_response(url, resp).await
+        self.process_response(resp).await
     }
 
     pub async fn fetch_html(&self, url: &str) -> Result<FetchResult, String> {
@@ -55,7 +61,7 @@ impl HttpClient {
             .send()
             .await
             .map_err(|e| e.to_string())?;
-        self.process_response(url, resp).await
+        self.process_response(resp).await
     }
 
     pub async fn fetch_robots_txt(&self, url: &str) -> Result<String, String> {
@@ -78,8 +84,22 @@ impl HttpClient {
         }
     }
 
-    async fn process_response(&self, _url: &str, resp: Response) -> Result<FetchResult, String> {
+    async fn process_response(&self, resp: Response) -> Result<FetchResult, String> {
         let status = resp.status().as_u16();
+
+        if (300..400).contains(&status) {
+            let location = resp
+                .headers()
+                .get("location")
+                .and_then(|v| v.to_str().ok())
+                .unwrap_or("(no Location header)")
+                .to_string();
+            return Err(format!(
+                "server redirected to {} (HTTP {}) — use --follow-redirect to follow",
+                location, status
+            ));
+        }
+
         let content_type = resp
             .headers()
             .get("content-type")

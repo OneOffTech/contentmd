@@ -2,8 +2,8 @@ use crate::http::HttpClient;
 use crate::parser;
 use std::fs;
 
-pub async fn run(url: &str, output: Option<&str>) -> Result<(), String> {
-    let client = HttpClient::new();
+pub async fn run(url: &str, output: Option<&str>, follow_redirect: bool) -> Result<(), String> {
+    let client = HttpClient::new(follow_redirect);
     let result = client.fetch_markdown(url).await?;
 
     if !result.is_markdown {

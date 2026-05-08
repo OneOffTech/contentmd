@@ -10,8 +10,9 @@ pub async fn run(
     frontmatter_only: bool,
     use_sitemap: bool,
     output_dir: Option<String>,
+    follow_redirect: bool,
 ) -> Result<(), String> {
-    let client = HttpClient::new();
+    let client = HttpClient::new(follow_redirect);
 
     let resolved_urls = if use_sitemap {
         if urls.len() != 1 {
