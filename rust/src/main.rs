@@ -1,3 +1,4 @@
+mod agent;
 mod commands;
 mod http;
 mod output;
@@ -12,7 +13,7 @@ struct Cli {
     /// URLs to fetch
     urls: Vec<String>,
 
-    /// Return raw markdown without size/token metadata
+    /// Output raw markdown only, no size/token metadata (also auto-detected from agent env)
     #[arg(long)]
     agent: bool,
 
@@ -41,7 +42,7 @@ enum Commands {
     /// Validate content-md compliance for a URL
     Validate {
         url: String,
-        /// Output format: plain, markdown, json
+        /// Output format: plain, markdown, json (overridden to json in agent mode)
         #[arg(long, default_value = "plain")]
         format: String,
         /// Save JSON report to file for later comparison
@@ -50,6 +51,9 @@ enum Commands {
         /// Follow HTTP redirects instead of reporting them
         #[arg(long)]
         follow_redirect: bool,
+        /// Output compact JSON for machine consumption (also auto-detected from agent env)
+        #[arg(long)]
+        agent: bool,
     },
     /// Convert a content-md page to an Agent Skill (SKILL.md)
     Skill {
@@ -60,6 +64,9 @@ enum Commands {
         /// Follow HTTP redirects instead of reporting them
         #[arg(long)]
         follow_redirect: bool,
+        /// Output JSON for machine consumption (also auto-detected from agent env)
+        #[arg(long)]
+        agent: bool,
     },
 }
 
@@ -68,11 +75,11 @@ async fn main() {
     let cli = Cli::parse();
 
     let result = match cli.command {
-        Some(Commands::Validate { url, format, save, follow_redirect }) => {
-            commands::validate::run(&url, &format, save.as_deref(), follow_redirect).await
+        Some(Commands::Validate { url, format, save, follow_redirect, agent }) => {
+            commands::validate::run(&url, &format, save.as_deref(), follow_redirect, agent).await
         }
-        Some(Commands::Skill { url, output, follow_redirect }) => {
-            commands::skill::run(&url, output.as_deref(), follow_redirect).await
+        Some(Commands::Skill { url, output, follow_redirect, agent }) => {
+            commands::skill::run(&url, output.as_deref(), follow_redirect, agent).await
         }
         None => {
             if cli.urls.is_empty() {
@@ -87,7 +94,8 @@ async fn main() {
                 cli.sitemap,
                 cli.output,
                 cli.follow_redirect,
-            ).await
+            )
+            .await
         }
     };
 

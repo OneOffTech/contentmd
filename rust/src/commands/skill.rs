@@ -1,8 +1,10 @@
+use crate::agent;
 use crate::http::HttpClient;
 use crate::parser;
 use std::fs;
 
-pub async fn run(url: &str, output: Option<&str>, follow_redirect: bool) -> Result<(), String> {
+pub async fn run(url: &str, output: Option<&str>, follow_redirect: bool, explicit_agent: bool) -> Result<(), String> {
+    let agent = agent::effective(explicit_agent);
     let client = HttpClient::new(follow_redirect);
     let result = client.fetch_markdown(url).await?;
 
@@ -53,13 +55,20 @@ pub async fn run(url: &str, output: Option<&str>, follow_redirect: bool) -> Resu
         out.push('\n');
     }
 
-    match output {
-        Some(path) => {
-            fs::write(path, &out).map_err(|e| format!("failed to write {}: {}", path, e))?;
-            println!("Skill written to {}", path);
-        }
-        None => {
-            print!("{}", out);
+    if agent {
+        let json = serde_json::json!({
+            "name": name,
+            "description": description,
+            "content": out,
+        });
+        println!("{}", serde_json::to_string_pretty(&json).unwrap());
+    } else {
+        match output {
+            Some(path) => {
+                fs::write(path, &out).map_err(|e| format!("failed to write {}: {}", path, e))?;
+                println!("Skill written to {}", path);
+            }
+            None => print!("{}", out),
         }
     }
 
@@ -90,6 +99,18 @@ pub(crate) fn slugify(text: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn agent_json_output_has_name_and_content() {
+        let json_str = {
+            let name = slugify("My Test Skill");
+            let description = "A test description";
+            let content = "---\nname: my-test-skill\n---\n\n# My Test Skill\n";
+            serde_json::json!({ "name": name, "description": description, "content": content })
+        };
+        assert_eq!(json_str["name"], "my-test-skill");
+        assert!(json_str["content"].as_str().unwrap().contains("---"));
+    }
 
     #[test]
     fn slugify_lowercases_and_hyphenates() {

@@ -1,3 +1,4 @@
+use crate::agent;
 use crate::http::HttpClient;
 use crate::output;
 use crate::tokens;
@@ -13,6 +14,7 @@ pub async fn run(
     follow_redirect: bool,
 ) -> Result<(), String> {
     let client = HttpClient::new(follow_redirect);
+    let agent = agent::effective(agent);
 
     let resolved_urls = if use_sitemap {
         if urls.len() != 1 {

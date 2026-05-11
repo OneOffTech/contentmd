@@ -1,12 +1,14 @@
 use scraper::{Html, Selector};
 use std::collections::HashMap;
 use std::fs;
+use crate::agent;
 use crate::http::HttpClient;
 use crate::output::{Check, OutputFormat, ValidationReport, print_validation_report, report_to_json_value};
 use crate::parser::{self, Frontmatter};
 use crate::tokens;
 
-pub async fn run(url: &str, format: &str, save: Option<&str>, follow_redirect: bool) -> Result<(), String> {
+pub async fn run(url: &str, format: &str, save: Option<&str>, follow_redirect: bool, explicit_agent: bool) -> Result<(), String> {
+    let agent = agent::effective(explicit_agent);
     let client = HttpClient::new(follow_redirect);
 
     let md_result = client.fetch_markdown(url).await?;
@@ -93,7 +95,12 @@ pub async fn run(url: &str, format: &str, save: Option<&str>, follow_redirect: b
         fs::write(path, json_str).map_err(|e| format!("failed to write {}: {}", path, e))?;
     }
 
-    print_validation_report(&report, &OutputFormat::from_str(format));
+    let fmt = if agent {
+        OutputFormat::Json
+    } else {
+        OutputFormat::from_str(format)
+    };
+    print_validation_report(&report, &fmt);
     Ok(())
 }
 
