@@ -135,8 +135,8 @@
         {{-- Footer --}}
         <footer class="border-t border-zinc-100 dark:border-zinc-800 py-8 agent:hidden">
             <x-container class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-                <p>Brought you by Alessio and Gianluca, <a href="https://oneofftech.de" target="_blank" rel="noopener noreferrer" class="underline hover:text-zinc-950 dark:hover:text-white transition-button">OneOff-Tech</a> and contributors.</p>
-
+                <p>Brought you by Alessio and Gianluca, <a href="https://oneofftech.de" target="_blank" rel="noopener" class="underline hover:text-zinc-950 dark:hover:text-white transition-button">OneOff-Tech</a> and contributors. <a href="{{ $page->url('/privacy') }}">Privacy Policy</a>.</p>
+                
                 <x-oot class="text-accent-600 dark:text-zinc-200" />
             </x-container>
         </footer>
