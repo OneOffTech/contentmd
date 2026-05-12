@@ -1,0 +1,67 @@
+name: CLI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build Rust (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            bin_src: rust/target/release/contentmd
+            bin_dst: dist/contentmd-linux
+            artifact: contentmd-linux
+          - os: macos-latest
+            bin_src: rust/target/release/contentmd
+            bin_dst: dist/contentmd-macos
+            artifact: contentmd-macos
+          - os: windows-latest
+            bin_src: rust/target/release/contentmd.exe
+            bin_dst: dist/contentmd-windows.exe
+            artifact: contentmd-windows
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('rust/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Run Tests
+        working-directory: rust
+        run: cargo test
+
+      - name: Build Binary
+        working-directory: rust
+        run: cargo build --release
+
+      - name: Stage binary for upload
+        shell: bash
+        run: |
+          mkdir -p dist
+          cp ${{ matrix.bin_src }} ${{ matrix.bin_dst }}
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.bin_dst }}
+          retention-days: 2
