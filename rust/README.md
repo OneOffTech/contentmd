@@ -1,11 +1,16 @@
 # contentmd CLI
 
-Command-line tool for browsing, validating, and converting [content-md](https://content-md.org) formatted web resources.
+Command-line tool for browsing and validating [content-md](https://content-md.org) formatted web resources.
 
 ## Install
 
+Pre-built binaries are available [under releases](https://github.com/OneOffTech/contentmd/releases) for major platforms.
+
+
+If you want to build from source
+
 ```sh
-cargo build --release
+cd rust && cargo build --release
 # binary at target/release/contentmd
 ```
 
@@ -16,16 +21,16 @@ cargo build --release
 Fetch a URL as an AI agent would — requesting `text/markdown` via content negotiation, falling back to HTML on 406.
 
 ```sh
-contentmd https://example.com/article
+contentmd https://contentmd.org/specification/
 ```
 
 | Flag | Description |
 |---|---|
 | `--agent` | Raw markdown only, no size/token header |
-| `--frontmatter-only` | Send `Range: x-frontmatter` to fetch only the frontmatter |
 | `--sitemap` | Fetch `/sitemap.xml` and iterate every URL in it |
 | `--output <folder>` | Save each response as a `.md` file (required when multiple URLs are given) |
 | `--follow-redirect` | Follow HTTP redirects (by default redirects are reported as an error) |
+| `--frontmatter-only` | Send `Range: x-frontmatter` to fetch only the frontmatter |
 
 ```sh
 # Multiple URLs saved to a folder
@@ -42,7 +47,7 @@ contentmd --sitemap --output ./pages https://example.com
 Check that a URL correctly serves content-md and report compliance.
 
 ```sh
-contentmd validate https://example.com/article
+contentmd validate https://contentmd.org/specification/
 ```
 
 Checks performed:
@@ -71,13 +76,13 @@ Each check is rated **pass**, **warn**, or **fail**. The report includes a **sco
 
 ```sh
 # Machine-readable output
-contentmd validate --format json https://example.com/article
+contentmd validate --format json https://contentmd.org/specification/
 
 # Save a snapshot for later comparison
-contentmd validate --save baseline.json https://example.com/article
+contentmd validate --save baseline.json https://contentmd.org/specification/
 
 # Markdown table (useful in CI comments)
-contentmd validate --format markdown https://example.com/article
+contentmd validate --format markdown https://contentmd.org/specification/
 ```
 
 | Flag | Description |
@@ -94,7 +99,7 @@ contentmd validate --format markdown https://example.com/article
 Convert a content-md page into an [Agent Skill](https://agentskills.io) (`SKILL.md`).
 
 ```sh
-contentmd skill https://example.com/article
+contentmd skill https://contentmd.org/specification/
 ```
 
 Transformations applied to the frontmatter:
@@ -105,7 +110,7 @@ Transformations applied to the frontmatter:
 
 ```sh
 # Write to a file
-contentmd skill --output SKILL.md https://example.com/article
+contentmd skill --output SKILL.md https://contentmd.org/specification/
 ```
 
 | Flag | Description |
