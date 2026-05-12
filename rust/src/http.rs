@@ -9,6 +9,8 @@ pub struct FetchResult {
     pub body: String,
     pub size_bytes: usize,
     pub is_markdown: bool,
+    pub is_binary: bool,
+    pub raw_bytes: Option<Vec<u8>>,
 }
 
 pub struct HttpClient {
@@ -114,6 +116,21 @@ impl HttpClient {
             }
         }
 
+        if is_binary_content_type(&content_type) {
+            let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
+            let size_bytes = bytes.len();
+            return Ok(FetchResult {
+                status,
+                content_type,
+                headers,
+                body: String::new(),
+                size_bytes,
+                is_markdown: false,
+                is_binary: true,
+                raw_bytes: Some(bytes.to_vec()),
+            });
+        }
+
         let body = resp.text().await.map_err(|e| e.to_string())?;
         let size_bytes = body.len();
         let is_markdown =
@@ -126,6 +143,72 @@ impl HttpClient {
             body,
             size_bytes,
             is_markdown,
+            is_binary: false,
+            raw_bytes: None,
         })
+    }
+}
+
+fn is_binary_content_type(ct: &str) -> bool {
+    let base = ct.split(';').next().unwrap_or("").trim().to_lowercase();
+    base.starts_with("image/")
+        || base.starts_with("audio/")
+        || base.starts_with("video/")
+        || matches!(
+            base.as_str(),
+            "application/pdf"
+                | "application/octet-stream"
+                | "application/zip"
+                | "application/x-zip-compressed"
+                | "application/gzip"
+                | "application/x-tar"
+                | "application/x-rar-compressed"
+                | "font/woff"
+                | "font/woff2"
+                | "font/ttf"
+                | "font/otf"
+        )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn pdf_is_binary() {
+        assert!(is_binary_content_type("application/pdf"));
+    }
+
+    #[test]
+    fn pdf_with_charset_is_binary() {
+        assert!(is_binary_content_type("application/pdf; charset=utf-8"));
+    }
+
+    #[test]
+    fn image_is_binary() {
+        assert!(is_binary_content_type("image/png"));
+        assert!(is_binary_content_type("image/jpeg"));
+    }
+
+    #[test]
+    fn audio_video_are_binary() {
+        assert!(is_binary_content_type("audio/mpeg"));
+        assert!(is_binary_content_type("video/mp4"));
+    }
+
+    #[test]
+    fn html_is_not_binary() {
+        assert!(!is_binary_content_type("text/html"));
+        assert!(!is_binary_content_type("text/html; charset=utf-8"));
+    }
+
+    #[test]
+    fn markdown_is_not_binary() {
+        assert!(!is_binary_content_type("text/markdown"));
+    }
+
+    #[test]
+    fn json_is_not_binary() {
+        assert!(!is_binary_content_type("application/json"));
     }
 }

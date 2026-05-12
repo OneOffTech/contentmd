@@ -33,6 +33,29 @@ pub struct ValidationReport {
     pub html_size: Option<usize>,
     pub markdown_size: Option<usize>,
     pub token_count: Option<usize>,
+    pub source_content_type: Option<String>,
+}
+
+pub fn format_size(bytes: usize) -> String {
+    if bytes >= 1_048_576 {
+        format!("{:.1} MB", bytes as f64 / 1_048_576.0)
+    } else if bytes >= 1_024 {
+        format!("{:.1} KB", bytes as f64 / 1_024.0)
+    } else {
+        format!("{} B", bytes)
+    }
+}
+
+fn content_type_label(ct: &str) -> String {
+    let base = ct.split(';').next().unwrap_or("").trim();
+    match base.to_lowercase().as_str() {
+        "text/html" => "HTML".to_string(),
+        "application/pdf" => "PDF".to_string(),
+        "text/plain" => "plain text".to_string(),
+        "application/json" => "JSON".to_string(),
+        _ if base.is_empty() => "source".to_string(),
+        _ => base.to_string(),
+    }
 }
 
 pub enum OutputFormat {
@@ -80,6 +103,7 @@ pub fn report_to_json_value(report: &ValidationReport) -> serde_json::Value {
         "url": report.url,
         "score": score(&report.checks),
         "checks": checks,
+        "source_content_type": report.source_content_type,
         "html_size_bytes": report.html_size,
         "markdown_size_bytes": report.markdown_size,
         "estimated_tokens": report.token_count,
@@ -121,7 +145,10 @@ fn print_plain(report: &ValidationReport) {
 
     if let (Some(html), Some(md)) = (report.html_size, report.markdown_size) {
         let reduction = if html > 0 { 100 - (md * 100 / html) } else { 0 };
-        println!("Size: {}B (HTML) → {}B (markdown), {}% smaller", html, md, reduction);
+        let label = report.source_content_type.as_deref()
+            .map(content_type_label)
+            .unwrap_or_else(|| "source".to_string());
+        println!("Size: {} ({}) → {} (markdown), {}% smaller", format_size(html), label, format_size(md), reduction);
     }
     if let Some(tokens) = report.token_count {
         println!("Estimated tokens: {}", tokens);
@@ -164,7 +191,10 @@ fn print_markdown(report: &ValidationReport) {
 
     if let (Some(html), Some(md)) = (report.html_size, report.markdown_size) {
         let reduction = if html > 0 { 100 - (md * 100 / html) } else { 0 };
-        println!("\n**Size:** `{}B` HTML → `{}B` markdown ({}% reduction)", html, md, reduction);
+        let label = report.source_content_type.as_deref()
+            .map(content_type_label)
+            .unwrap_or_else(|| "source".to_string());
+        println!("\n**Size:** `{}` {} → `{}` markdown ({}% reduction)", format_size(html), label, format_size(md), reduction);
     }
     if let Some(tokens) = report.token_count {
         println!("**Estimated tokens:** {}", tokens);
@@ -212,9 +242,44 @@ mod tests {
             html_size: None,
             markdown_size: None,
             token_count: None,
+            source_content_type: None,
         };
         let val = report_to_json_value(&report);
         assert_eq!(val["score"], 50);
+    }
+
+    #[test]
+    fn format_size_bytes() {
+        assert_eq!(format_size(500), "500 B");
+        assert_eq!(format_size(0), "0 B");
+    }
+
+    #[test]
+    fn format_size_kilobytes() {
+        assert_eq!(format_size(1024), "1.0 KB");
+        assert_eq!(format_size(2048), "2.0 KB");
+    }
+
+    #[test]
+    fn format_size_megabytes() {
+        assert_eq!(format_size(1_048_576), "1.0 MB");
+        assert_eq!(format_size(2 * 1_048_576), "2.0 MB");
+    }
+
+    #[test]
+    fn content_type_label_html() {
+        assert_eq!(content_type_label("text/html"), "HTML");
+        assert_eq!(content_type_label("text/html; charset=utf-8"), "HTML");
+    }
+
+    #[test]
+    fn content_type_label_pdf() {
+        assert_eq!(content_type_label("application/pdf"), "PDF");
+    }
+
+    #[test]
+    fn content_type_label_empty_falls_back_to_source() {
+        assert_eq!(content_type_label(""), "source");
     }
 
     #[test]
@@ -225,6 +290,7 @@ mod tests {
             html_size: Some(1000),
             markdown_size: Some(200),
             token_count: Some(50),
+            source_content_type: None,
         };
         let val = report_to_json_value(&report);
         assert_eq!(val["url"], "https://example.com");
@@ -240,7 +306,7 @@ pub fn print_browse_result(url: &str, content: &str, size_bytes: usize, tokens: 
         return;
     }
     println!("URL:    {}", url);
-    println!("Size:   {}B  |  Estimated tokens: {}", size_bytes, tokens);
+    println!("Size:   {}  |  Estimated tokens: {}", format_size(size_bytes), tokens);
     println!("{}", "─".repeat(60));
     println!("{}", content);
 }

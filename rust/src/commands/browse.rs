@@ -40,6 +40,26 @@ pub async fn run(
             client.fetch_markdown(url).await?
         };
 
+        if result.is_binary {
+            match output_dir {
+                None => {
+                    return Err(format!(
+                        "{} returned a binary file ({}); provide --output <FOLDER> to save it",
+                        url, result.content_type
+                    ));
+                }
+                Some(ref dir) => {
+                    let filename = binary_filename_from_url(url);
+                    let path = format!("{}/{}", dir, filename);
+                    let bytes = result.raw_bytes.as_deref().unwrap_or(&[]);
+                    fs::write(&path, bytes)
+                        .map_err(|e| format!("failed to write {}: {}", path, e))?;
+                    println!("Saved: {} ({})", path, output::format_size(result.size_bytes));
+                }
+            }
+            continue;
+        }
+
         let tokens = tokens::estimate(&result.body);
 
         if let Some(ref dir) = output_dir {
@@ -83,6 +103,18 @@ async fn fetch_sitemap_urls(client: &HttpClient, base_url: &str) -> Result<Vec<S
     }
 
     Ok(urls)
+}
+
+fn binary_filename_from_url(url: &str) -> String {
+    Url::parse(url)
+        .map(|u| {
+            u.path_segments()
+                .and_then(|mut s| s.next_back())
+                .filter(|s| !s.is_empty())
+                .unwrap_or("download")
+                .to_string()
+        })
+        .unwrap_or_else(|_| "download".to_string())
 }
 
 pub(crate) fn url_to_filename(url: &str) -> String {

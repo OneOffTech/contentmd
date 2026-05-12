@@ -86,6 +86,7 @@ pub async fn run(url: &str, format: &str, save: Option<&str>, follow_redirect: b
         html_size: html_result.as_ref().map(|r| r.size_bytes),
         markdown_size: Some(md_result.size_bytes),
         token_count,
+        source_content_type: html_result.as_ref().map(|r| r.content_type.clone()),
     };
 
     if let Some(path) = save {

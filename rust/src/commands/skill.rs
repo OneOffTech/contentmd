@@ -8,6 +8,13 @@ pub async fn run(url: &str, output: Option<&str>, follow_redirect: bool, explici
     let client = HttpClient::new(follow_redirect);
     let result = client.fetch_markdown(url).await?;
 
+    if result.is_binary {
+        return Err(format!(
+            "{} returned a binary file ({}); skill command only supports text content",
+            url, result.content_type
+        ));
+    }
+
     if !result.is_markdown {
         return Err(format!(
             "URL did not return content-md (got {})",
