@@ -8,27 +8,64 @@ use std::io::Write;
 use std::path::Path;
 use url::Url;
 
-pub async fn run(
-    urls: Vec<String>,
-    agent: bool,
-    frontmatter_only: bool,
-    use_sitemap: bool,
-    output_dir: Option<String>,
-    follow_redirect: bool,
-) -> Result<(), String> {
+pub struct BrowseOptions {
+    pub urls: Vec<String>,
+    pub agent: bool,
+    pub frontmatter_only: bool,
+    pub use_sitemap: bool,
+    pub output_dir: Option<String>,
+    pub follow_redirect: bool,
+    pub delay_ms: u64,
+    pub max_urls: usize,
+}
+
+pub async fn run(opts: BrowseOptions) -> Result<(), String> {
+    let BrowseOptions {
+        urls,
+        agent,
+        frontmatter_only,
+        use_sitemap,
+        output_dir,
+        follow_redirect,
+        delay_ms,
+        max_urls,
+    } = opts;
+
     let client = HttpClient::new(follow_redirect);
     let agent = agent::effective(agent);
 
-    let resolved_urls = if use_sitemap {
+    let mut resolved_urls = if use_sitemap {
         if urls.len() != 1 {
             return Err("--sitemap requires exactly one base URL".into());
         }
         fetch_sitemap_urls(&client, &urls[0]).await?
     } else {
-        urls
+        urls.clone()
     };
 
-    if resolved_urls.len() > 1 && output_dir.is_none() {
+    if resolved_urls.len() > max_urls {
+        eprintln!(
+            "Note: sitemap returned {} URLs; fetching the first {}. Pass --max-urls to raise the cap.",
+            resolved_urls.len(),
+            max_urls,
+        );
+        resolved_urls.truncate(max_urls);
+    }
+
+    let (allowed_urls, crawl_delay_ms) = if use_sitemap {
+        apply_robots(&client, &urls[0], resolved_urls).await?
+    } else {
+        (resolved_urls, None)
+    };
+
+    if allowed_urls.is_empty() {
+        if use_sitemap {
+            eprintln!("Note: robots.txt disallows all URLs for contentmd-cli");
+        }
+        return Ok(());
+    }
+
+    if allowed_urls.len() > 1 && output_dir.is_none() {
         return Err("multiple URLs require --output <FOLDER>".into());
     }
 
@@ -36,7 +73,12 @@ pub async fn run(
         fs::create_dir_all(dir).map_err(|e| format!("failed to create output dir: {}", e))?;
     }
 
-    for url in &resolved_urls {
+    let effective_delay_ms = match crawl_delay_ms {
+        Some(robots_ms) => robots_ms.max(delay_ms),
+        None => delay_ms,
+    };
+
+    for (i, url) in allowed_urls.iter().enumerate() {
         let result = if frontmatter_only {
             client.fetch_frontmatter_only(url).await?
         } else {
@@ -75,23 +117,163 @@ pub async fn run(
                     );
                 }
             }
-            continue;
+        } else {
+            let tokens = tokens::estimate(&result.body);
+
+            if let Some(ref dir) = output_dir {
+                let filename = url_to_filename(url);
+                let path = format!("{}/{}", dir, filename);
+                fs::write(&path, &result.body)
+                    .map_err(|e| format!("failed to write {}: {}", path, e))?;
+                println!("Saved: {}", path);
+            } else {
+                output::print_browse_result(url, &result.body, result.size_bytes, tokens, agent);
+            }
         }
 
-        let tokens = tokens::estimate(&result.body);
-
-        if let Some(ref dir) = output_dir {
-            let filename = url_to_filename(url);
-            let path = format!("{}/{}", dir, filename);
-            fs::write(&path, &result.body)
-                .map_err(|e| format!("failed to write {}: {}", path, e))?;
-            println!("Saved: {}", path);
-        } else {
-            output::print_browse_result(url, &result.body, result.size_bytes, tokens, agent);
+        if i + 1 < allowed_urls.len() && effective_delay_ms > 0 {
+            tokio::time::sleep(std::time::Duration::from_millis(effective_delay_ms)).await;
         }
     }
 
     Ok(())
+}
+
+async fn apply_robots(
+    client: &HttpClient,
+    base_url: &str,
+    urls: Vec<String>,
+) -> Result<(Vec<String>, Option<u64>), String> {
+    let robots = match client.fetch_robots_txt(base_url).await {
+        Ok(body) => body,
+        Err(_) => return Ok((urls, None)),
+    };
+    let rules = parse_robots(&robots, "contentmd-cli");
+    let kept: Vec<String> = urls
+        .into_iter()
+        .filter(|u| rules.is_allowed(u))
+        .collect();
+    Ok((kept, rules.crawl_delay_ms))
+}
+
+struct RobotsRules {
+    disallow_prefixes: Vec<String>,
+    crawl_delay_ms: Option<u64>,
+}
+
+impl RobotsRules {
+    fn is_allowed(&self, url: &str) -> bool {
+        let Ok(parsed) = Url::parse(url) else {
+            return false;
+        };
+        let path = parsed.path();
+        !self
+            .disallow_prefixes
+            .iter()
+            .any(|p| !p.is_empty() && path.starts_with(p.as_str()))
+    }
+}
+
+fn parse_robots(body: &str, user_agent: &str) -> RobotsRules {
+    let target = user_agent.to_ascii_lowercase();
+
+    let mut current_agents: Vec<String> = Vec::new();
+    let mut prev_was_directive = true;
+
+    let mut wildcard_disallow: Vec<String> = Vec::new();
+    let mut wildcard_crawl: Option<u64> = None;
+    let mut wildcard_seen = false;
+
+    let mut specific_disallow: Vec<String> = Vec::new();
+    let mut specific_crawl: Option<u64> = None;
+    let mut specific_seen = false;
+
+    for raw_line in body.lines() {
+        let line = match raw_line.find('#') {
+            Some(i) => &raw_line[..i],
+            None => raw_line,
+        };
+        let line = line.trim();
+        if line.is_empty() {
+            continue;
+        }
+
+        let Some((key, value)) = line.split_once(':') else {
+            continue;
+        };
+        let key_lower = key.trim().to_ascii_lowercase();
+        let value = value.trim();
+
+        if key_lower == "user-agent" {
+            if prev_was_directive {
+                current_agents.clear();
+            }
+            current_agents.push(value.to_ascii_lowercase());
+            prev_was_directive = false;
+            continue;
+        }
+
+        prev_was_directive = true;
+
+        let matches_specific = current_agents.iter().any(|a| a == &target);
+        let matches_wildcard = current_agents.iter().any(|a| a == "*");
+
+        match key_lower.as_str() {
+            "disallow" => {
+                if matches_specific {
+                    specific_seen = true;
+                    specific_disallow.push(value.to_string());
+                }
+                if matches_wildcard {
+                    wildcard_seen = true;
+                    wildcard_disallow.push(value.to_string());
+                }
+            }
+            "crawl-delay" => {
+                if let Some(ms) = parse_crawl_delay_ms(value) {
+                    if matches_specific {
+                        specific_seen = true;
+                        specific_crawl = Some(ms);
+                    }
+                    if matches_wildcard {
+                        wildcard_seen = true;
+                        wildcard_crawl = Some(ms);
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+
+    if specific_seen {
+        RobotsRules {
+            disallow_prefixes: specific_disallow,
+            crawl_delay_ms: specific_crawl,
+        }
+    } else if wildcard_seen {
+        RobotsRules {
+            disallow_prefixes: wildcard_disallow,
+            crawl_delay_ms: wildcard_crawl,
+        }
+    } else {
+        RobotsRules {
+            disallow_prefixes: Vec::new(),
+            crawl_delay_ms: None,
+        }
+    }
+}
+
+fn parse_crawl_delay_ms(value: &str) -> Option<u64> {
+    let secs: f64 = value.parse().ok()?;
+    if !secs.is_finite() || secs < 0.0 {
+        return Some(0);
+    }
+    let ms = (secs * 1000.0).round();
+    if ms <= 0.0 {
+        return Some(0);
+    }
+    let clamped = ms.min(60_000.0) as u64;
+    Some(clamped)
 }
 
 async fn fetch_sitemap_urls(client: &HttpClient, base_url: &str) -> Result<Vec<String>, String> {
@@ -496,6 +678,69 @@ mod tests {
             binary_filename_from_url("https://example.com/foo/"),
             "download"
         );
+    }
+
+    #[test]
+    fn parse_robots_matches_specific_agent_over_wildcard() {
+        let body = "User-agent: *\nDisallow: /\n\nUser-agent: contentmd-cli\nDisallow:\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert!(rules.is_allowed("https://example.com/anything"));
+        assert!(rules.is_allowed("https://example.com/private/secret"));
+    }
+
+    #[test]
+    fn parse_robots_falls_back_to_wildcard() {
+        let body = "User-agent: *\nDisallow: /private\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert!(!rules.is_allowed("https://x/private/a"));
+        assert!(rules.is_allowed("https://x/public"));
+    }
+
+    #[test]
+    fn parse_robots_extracts_crawl_delay() {
+        let body = "User-agent: contentmd-cli\nCrawl-delay: 2\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert_eq!(rules.crawl_delay_ms, Some(2000));
+    }
+
+    #[test]
+    fn parse_robots_clamps_crawl_delay() {
+        let body = "User-agent: contentmd-cli\nCrawl-delay: 9999\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert_eq!(rules.crawl_delay_ms, Some(60_000));
+    }
+
+    #[test]
+    fn parse_robots_ignores_comments_and_blank_lines() {
+        let body = "# a comment\n\nUser-agent: contentmd-cli   # inline\nDisallow: /admin # block admin\n\n# trailing\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert!(!rules.is_allowed("https://x/admin/users"));
+        assert!(rules.is_allowed("https://x/home"));
+    }
+
+    #[test]
+    fn parse_robots_decimal_crawl_delay() {
+        let body = "User-agent: contentmd-cli\nCrawl-delay: 0.5\n";
+        let rules = parse_robots(body, "contentmd-cli");
+        assert_eq!(rules.crawl_delay_ms, Some(500));
+    }
+
+    #[test]
+    fn robots_rules_is_allowed_empty_disallow_means_allow() {
+        let rules = RobotsRules {
+            disallow_prefixes: vec![String::new()],
+            crawl_delay_ms: None,
+        };
+        assert!(rules.is_allowed("https://example.com/anything"));
+    }
+
+    #[test]
+    fn robots_rules_is_allowed_invalid_url_rejects() {
+        let rules = RobotsRules {
+            disallow_prefixes: Vec::new(),
+            crawl_delay_ms: None,
+        };
+        assert!(!rules.is_allowed("not a url"));
     }
 
     #[test]

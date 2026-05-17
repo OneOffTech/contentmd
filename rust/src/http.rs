@@ -1,5 +1,6 @@
-use reqwest::{Client, Response};
+use reqwest::{Client, RequestBuilder, Response};
 use std::collections::HashMap;
+use std::time::Duration;
 use url::Url;
 
 pub struct FetchResult {
@@ -33,37 +34,75 @@ impl HttpClient {
     }
 
     pub async fn fetch_markdown(&self, url: &str) -> Result<FetchResult, String> {
-        let resp = self
+        let req = self
             .client
             .get(url)
-            .header("Accept", "text/markdown, text/html;q=0.9, */*;q=0.8")
-            .send()
-            .await
-            .map_err(|e| e.to_string())?;
+            .header("Accept", "text/markdown, text/html;q=0.9, */*;q=0.8");
+        let resp = self.send_with_retry(req, url).await?;
         self.process_response(resp).await
     }
 
     pub async fn fetch_frontmatter_only(&self, url: &str) -> Result<FetchResult, String> {
-        let resp = self
+        let req = self
             .client
             .get(url)
             .header("Accept", "text/markdown")
-            .header("Range", "x-frontmatter")
-            .send()
-            .await
-            .map_err(|e| e.to_string())?;
+            .header("Range", "x-frontmatter");
+        let resp = self.send_with_retry(req, url).await?;
         self.process_response(resp).await
     }
 
     pub async fn fetch_html(&self, url: &str) -> Result<FetchResult, String> {
-        let resp = self
+        let req = self
             .client
             .get(url)
-            .header("Accept", "text/html, */*;q=0.8")
-            .send()
-            .await
-            .map_err(|e| e.to_string())?;
+            .header("Accept", "text/html, */*;q=0.8");
+        let resp = self.send_with_retry(req, url).await?;
         self.process_response(resp).await
+    }
+
+    async fn send_with_retry(
+        &self,
+        req: RequestBuilder,
+        url: &str,
+    ) -> Result<Response, String> {
+        let retry_req = req.try_clone();
+        let resp = req.send().await.map_err(|e| e.to_string())?;
+        let status = resp.status().as_u16();
+
+        if status != 429 && status != 503 {
+            return Ok(resp);
+        }
+
+        let Some(retry_req) = retry_req else {
+            return Ok(resp);
+        };
+
+        let retry_after_raw = resp
+            .headers()
+            .get("retry-after")
+            .and_then(|v| v.to_str().ok())
+            .map(|s| s.to_string());
+        let wait = parse_retry_after(retry_after_raw.as_deref());
+
+        drop(resp);
+
+        if !wait.is_zero() {
+            tokio::time::sleep(wait).await;
+        }
+
+        let resp2 = retry_req.send().await.map_err(|e| e.to_string())?;
+        let status2 = resp2.status().as_u16();
+        if status2 == 429 || status2 == 503 {
+            return Err(format!(
+                "{} {} for {} (retried once with Retry-After={}s)",
+                status2,
+                status_reason(status2),
+                url,
+                wait.as_secs()
+            ));
+        }
+        Ok(resp2)
     }
 
     pub async fn fetch_robots_txt(&self, url: &str) -> Result<String, String> {
@@ -149,6 +188,25 @@ impl HttpClient {
     }
 }
 
+fn parse_retry_after(value: Option<&str>) -> Duration {
+    let Some(v) = value else {
+        return Duration::ZERO;
+    };
+    let trimmed = v.trim();
+    let Ok(secs) = trimmed.parse::<u64>() else {
+        return Duration::ZERO;
+    };
+    Duration::from_secs(secs.min(60))
+}
+
+fn status_reason(status: u16) -> &'static str {
+    match status {
+        429 => "Too Many Requests",
+        503 => "Service Unavailable",
+        _ => "",
+    }
+}
+
 fn is_binary_content_type(ct: &str) -> bool {
     let base = ct.split(';').next().unwrap_or("").trim().to_lowercase();
     base.starts_with("image/")
@@ -210,5 +268,15 @@ mod tests {
     #[test]
     fn json_is_not_binary() {
         assert!(!is_binary_content_type("application/json"));
+    }
+
+    #[test]
+    fn retry_after_parses_delta_seconds() {
+        assert_eq!(parse_retry_after(Some("5")), Duration::from_secs(5));
+        assert_eq!(parse_retry_after(Some("abc")), Duration::ZERO);
+        assert_eq!(parse_retry_after(Some("9999")), Duration::from_secs(60));
+        assert_eq!(parse_retry_after(None), Duration::ZERO);
+        assert_eq!(parse_retry_after(Some("0")), Duration::ZERO);
+        assert_eq!(parse_retry_after(Some(" 7 ")), Duration::from_secs(7));
     }
 }

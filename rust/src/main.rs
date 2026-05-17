@@ -33,6 +33,14 @@ struct Cli {
     #[arg(long)]
     follow_redirect: bool,
 
+    /// Delay in milliseconds between requests when fetching multiple URLs (default: 500)
+    #[arg(long, value_name = "MS", default_value_t = 500)]
+    delay: u64,
+
+    /// Maximum number of URLs to fetch in one invocation (default: 100)
+    #[arg(long, value_name = "N", default_value_t = 100)]
+    max_urls: usize,
+
     #[command(subcommand)]
     command: Option<Commands>,
 }
@@ -87,14 +95,16 @@ async fn main() {
                 eprintln!("Run with --help for usage.");
                 std::process::exit(1);
             }
-            commands::browse::run(
-                cli.urls,
-                cli.agent,
-                cli.frontmatter_only,
-                cli.sitemap,
-                cli.output,
-                cli.follow_redirect,
-            )
+            commands::browse::run(commands::browse::BrowseOptions {
+                urls: cli.urls,
+                agent: cli.agent,
+                frontmatter_only: cli.frontmatter_only,
+                use_sitemap: cli.sitemap,
+                output_dir: cli.output,
+                follow_redirect: cli.follow_redirect,
+                delay_ms: cli.delay,
+                max_urls: cli.max_urls,
+            })
             .await
         }
     };
