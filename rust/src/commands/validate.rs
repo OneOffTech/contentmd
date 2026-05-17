@@ -243,7 +243,7 @@ fn length_and_token_checks(fm: &Frontmatter, raw_fm: &str) -> Vec<Check> {
         if !title.is_empty() {
             let n = title.chars().count();
             let msg = format!("{} chars (target: 25–60)", n);
-            if n >= 25 && n <= 60 {
+            if (25..=60).contains(&n) {
                 checks.push(Check::pass("title-length", msg));
             } else {
                 checks.push(Check::warn("title-length", msg));
@@ -255,7 +255,7 @@ fn length_and_token_checks(fm: &Frontmatter, raw_fm: &str) -> Vec<Check> {
         if !desc.is_empty() {
             let n = desc.chars().count();
             let msg = format!("{} chars (target: 25–160)", n);
-            if n >= 25 && n <= 160 {
+            if (25..=160).contains(&n) {
                 checks.push(Check::pass("description-length", msg));
             } else {
                 checks.push(Check::warn("description-length", msg));

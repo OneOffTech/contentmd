@@ -1,6 +1,6 @@
 /// Estimates token count using ~4 chars per token (English approximation).
 pub fn estimate(text: &str) -> usize {
-    (text.len() + 3) / 4
+    text.len().div_ceil(4)
 }
 
 #[cfg(test)]

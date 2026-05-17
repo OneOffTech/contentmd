@@ -28,12 +28,7 @@ const AGENT_VARS: &[&str] = &[
 /// Returns the name of the first env-var (or sentinel string) that indicates an
 /// agent runtime, or `None` when running in a regular terminal.
 pub(crate) fn detected_agent() -> Option<&'static str> {
-    for &var in AGENT_VARS {
-        if env::var(var).is_ok() {
-            return Some(var);
-        }
-    }
-    None
+    AGENT_VARS.iter().find(|&&var| env::var(var).is_ok()).copied().map(|v| v as _)
 }
 
 /// Returns `true` when an agent runtime is detected via environment heuristics.
