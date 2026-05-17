@@ -64,6 +64,12 @@
 
     <x-container class="mb-16 mt-4">
         <x-card-grid cols="3-sm">
+            <x-card title="contentmd CLI">
+                Browse and validate content-md sites from the command line — fetch pages as an AI agent, run compliance checks, and convert content to agent skills.
+                <x-slot name="action">
+                    <a href="/cli" class="text-sm hover:underline block transition-button">CLI reference →</a>
+                </x-slot>
+            </x-card>
             <x-card title="Caddy Content Negotiation">
                 Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in.
                 <x-slot name="action">
@@ -150,6 +156,7 @@ Tools & plugins. These tools help you start serving content-md without building 
 
 - **Caddy Content Negotiation**: Serve pre-existing markdown files via the Caddy web server with proper content negotiation headers built in. [avvertix/caddy-content-negotiation](https://github.com/avvertix/caddy-content-negotiation/)
 - **WordPress Post to Markdown**: Serve post content as Markdown directly from Wordpress. [roots/post-content-to-markdown](https://github.com/roots/post-content-to-markdown)
+- **contentmd CLI**: Browse and validate content-md sites from the command line — fetch pages as an AI agent, run compliance checks, and convert content to agent skills. [CLI reference](/cli)
 
 ## Comparison
 

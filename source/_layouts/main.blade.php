@@ -105,10 +105,11 @@
                 </a>
                 <nav class="relative flex items-center gap-6 text-sm  agent:flex-col agent:items-start">
                     <div class="hidden sm:flex items-center gap-6 agent:flex-col agent:flex agent:items-start agent:gap-3">
-                        <a href="/writers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
-                        <a href="/consumers" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
-                        <a href="/specification" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Specification</a>
-                        <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
+                        <x-nav-link href="/cli" :active="$page->isActive('cli')" >CLI</x-nav-link>
+                        <x-nav-link href="/writers" :active="$page->isActive('writers')">Write</x-nav-link>
+                        <x-nav-link href="/consumers" :active="$page->isActive('consumers')">Read</x-nav-link>
+                        <x-nav-link href="/specification" :active="$page->isActive('specification')">Specification</x-nav-link>
+                        <a href="{{ $page->github }}" target="_blank" rel="noopener" class="text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
                             GitHub ↗
                         </a>
                     </div>
@@ -116,9 +117,10 @@
                         <summary class="transition-button cursor-pointer">Menu</summary>
 
                         <div class="absolute w-60 bg-white dark:bg-zinc-950 shadow z-10 right-0 flex flex-col items-end gap-2 p-4">
-                            <a href="/writers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Write content-md</a>
-                            <a href="/consumers" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Read content-md</a>
-                            <a href="/specification" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">Specification</a>
+                            <x-nav-link href="/cli" :active="$page->isActive('cli')" >CLI</x-nav-link>
+                            <x-nav-link href="/writers" :active="$page->isActive('writers')">Write</x-nav-link>
+                            <x-nav-link href="/consumers" :active="$page->isActive('consumers')">Read</x-nav-link>
+                            <x-nav-link href="/specification" :active="$page->isActive('specification')">Specification</x-nav-link>
                             <a href="{{ $page->github }}" target="_blank" rel="noopener noreferrer" class="p-4 text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-button">
                                 GitHub ↗
                             </a>
