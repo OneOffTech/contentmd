@@ -1,6 +1,6 @@
 ---
-title: contentmd CLI
-description: Command-line tool for browsing and validating content-md sites — fetch pages as an AI agent, run compliance checks, and convert content to agent skills.
+title: Content-md command line
+description: Command-line tool for browsing and validating content-md sites. Fetch pages as an AI agent, run compliance checks, and convert content to agent skills.
 card:
   template: '_og.page'
   path: /assets/og/cli.png
@@ -22,8 +22,8 @@ card:
     <x-slot name="extra">
         <div class="space-y-1">
             <p>
-                <a href="https://github.com/OneOffTech/contentmd/releases/latest" class="select-none inline-block text-center px-3 py-2 leading-4 font-medium text-zinc-700 bg-white hover:bg-zinc-50 dark:bg-zinc-600 dark:text-white dark:hover:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 whitespace-nowrap transition-button ring-1 ring-zinc-950/10 dark:ring-zinc-950/10 shadow-sm" >
-                    Download contentmd
+                <a href="https://github.com/OneOffTech/contentmd/releases/latest" class="select-none inline-block text-center px-4 py-3 leading-4 font-medium text-zinc-700 bg-white hover:bg-zinc-50 dark:bg-zinc-600 dark:text-white dark:hover:bg-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500 whitespace-nowrap transition-button ring-1 ring-zinc-950/10 dark:ring-zinc-950/10 shadow-sm" >
+                    Download from GitHub
                 </a>
             </p>
             <p class="text-sm text-zinc-700">for Windows, Linux and MacOS</p>
@@ -51,9 +51,9 @@ card:
                 <div class="rounded-lg overflow-hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                     <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center justify-between gap-2">
                         <span class="text-xs text-zinc-400">Single page</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-4 shrink-0 hit-area-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                     <div class="bg-zinc-950 p-4 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto" x-ref="code">
@@ -64,9 +64,9 @@ card:
                 <div class="rounded-lg overflow-hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                     <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center justify-between gap-2">
                         <span class="text-xs text-zinc-400">Multiple pages → folder</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-4 shrink-0 hit-area-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                     <div class="bg-zinc-950 p-4 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto" x-ref="code">
@@ -79,9 +79,9 @@ card:
                 <div class="rounded-lg overflow-hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                     <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center justify-between gap-2">
                         <span class="text-xs text-zinc-400">Full site via sitemap</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-4 shrink-0 hit-area-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                     <div class="bg-zinc-950 p-4 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto" x-ref="code">
@@ -227,9 +227,9 @@ card:
                 <div class="rounded-lg overflow-hidden agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                     <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center justify-between gap-2">
                         <span class="text-xs text-zinc-400">Plain output (default)</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-4 shrink-0 hit-area-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                     <div class="bg-zinc-950 p-4 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto" x-ref="code">
@@ -254,9 +254,9 @@ card:
                     Use <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">--format json</code> for structured output — useful in CI pipelines or when comparing reports over time.
                     <div class="relative rounded bg-zinc-950 p-3 font-mono text-xs text-zinc-100 mt-3 overflow-x-auto agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                         <span x-ref="code">contentmd validate <span class="text-yellow-300">--format json</span> https://contentmd.org/</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-6 shrink-0 hit-area-2 absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                 </x-card>
@@ -265,9 +265,9 @@ card:
                     Save a baseline report with <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">--save baseline.json</code> and compare it later. Useful for tracking compliance regressions as a site evolves.
                     <div class="relative rounded bg-zinc-950 p-3 font-mono text-xs text-zinc-100 mt-3 overflow-x-auto agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                         <span x-ref="code">contentmd validate <span class="text-yellow-300">--save baseline.json</span> https://contentmd.org/</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-6 shrink-0 hit-area-2 absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                 </x-card>
@@ -276,9 +276,9 @@ card:
                     Use <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">--format markdown</code> to generate a compliance table suitable for posting in pull request comments.
                     <div class="relative rounded bg-zinc-950 p-3 font-mono text-xs text-zinc-100 mt-3 overflow-x-auto agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                         <span x-ref="code">contentmd validate <span class="text-yellow-300">--format markdown</span> https://contentmd.org/</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-6 shrink-0 hit-area-2 absolute top-2 right-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                 </x-card>
@@ -309,9 +309,9 @@ card:
                 <div class="rounded-lg overflow-hidden agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
                     <div class="bg-zinc-800 dark:bg-zinc-900 px-4 py-2 flex items-center justify-between gap-2">
                         <span class="text-xs text-zinc-400">Skill command</span>
-                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
-                            <svg x-show="!copied" class="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <svg x-show="copied" class="size-3.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+                        <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="size-4 shrink-0 hit-area-2 text-zinc-500 hover:text-zinc-300 transition-colors" aria-label="Copy to clipboard">
+                            <svg x-show="!copied" class="size-4.5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <svg x-show="copied" class="size-4.5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
                     <div class="bg-zinc-950 p-4 font-mono text-xs leading-relaxed text-zinc-100 overflow-x-auto" x-ref="code">
@@ -350,11 +350,6 @@ Command-line tool for browsing and validating content-md formatted web resources
 ## Install
 
 Pre-built binaries for Linux, macOS, and Windows are available on [GitHub Releases](https://github.com/OneOffTech/contentmd/releases). No runtime required.
-
-```sh
-# Or build from source
-cargo install contentmd
-```
 
 ## Browse
 
