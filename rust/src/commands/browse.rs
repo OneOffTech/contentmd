@@ -78,28 +78,77 @@ pub async fn run(
 
 async fn fetch_sitemap_urls(client: &HttpClient, base_url: &str) -> Result<Vec<String>, String> {
     let parsed = Url::parse(base_url).map_err(|e| format!("invalid URL: {}", e))?;
-    let sitemap_url = format!(
-        "{}://{}/sitemap.xml",
-        parsed.scheme(),
-        parsed.host_str().unwrap_or("")
-    );
+    let host = parsed
+        .host_str()
+        .ok_or_else(|| format!("invalid URL: missing host in {}", base_url))?;
+    let sitemap_url = format!("{}://{}/sitemap.xml", parsed.scheme(), host);
 
     let result = client.fetch_markdown(&sitemap_url).await?;
+    filter_sitemap_urls(&sitemap_url, &result.body)
+}
+
+fn filter_sitemap_urls(sitemap_url: &str, body: &str) -> Result<Vec<String>, String> {
+    let sitemap_parsed = Url::parse(sitemap_url)
+        .map_err(|e| format!("invalid sitemap URL {}: {}", sitemap_url, e))?;
+    let expected_host = sitemap_parsed
+        .host_str()
+        .ok_or_else(|| format!("invalid sitemap URL: missing host in {}", sitemap_url))?
+        .to_lowercase();
 
     let mut urls = Vec::new();
-    let mut remaining = result.body.as_str();
+    let mut rejected: Vec<String> = Vec::new();
+    let mut found_any = false;
+    let mut remaining = body;
     while let Some(start) = remaining.find("<loc>") {
         let after_open = &remaining[start + 5..];
-        if let Some(end) = after_open.find("</loc>") {
-            urls.push(after_open[..end].trim().to_string());
-            remaining = &after_open[end + 6..];
-        } else {
+        let Some(end) = after_open.find("</loc>") else {
             break;
+        };
+        let loc = after_open[..end].trim().to_string();
+        remaining = &after_open[end + 6..];
+        found_any = true;
+
+        match Url::parse(&loc) {
+            Ok(parsed_loc) => {
+                let scheme = parsed_loc.scheme();
+                if scheme != "http" && scheme != "https" {
+                    rejected.push(loc);
+                    continue;
+                }
+                match parsed_loc.host_str() {
+                    Some(h) if h.to_lowercase() == expected_host => urls.push(loc),
+                    _ => rejected.push(loc),
+                }
+            }
+            Err(url::ParseError::RelativeUrlWithoutBase) => match sitemap_parsed.join(&loc) {
+                Ok(resolved) => urls.push(resolved.to_string()),
+                Err(_) => rejected.push(loc),
+            },
+            Err(_) => rejected.push(loc),
         }
     }
 
-    if urls.is_empty() {
+    if !found_any {
         return Err(format!("no <loc> entries found in {}", sitemap_url));
+    }
+
+    if !rejected.is_empty() {
+        const MAX_SHOWN: usize = 5;
+        let shown = rejected
+            .iter()
+            .take(MAX_SHOWN)
+            .map(String::as_str)
+            .collect::<Vec<_>>()
+            .join(", ");
+        let suffix = if rejected.len() > MAX_SHOWN {
+            format!(", and {} more", rejected.len() - MAX_SHOWN)
+        } else {
+            String::new()
+        };
+        return Err(format!(
+            "sitemap at {} contains URLs whose host does not match {}: {}{}",
+            sitemap_url, expected_host, shown, suffix
+        ));
     }
 
     Ok(urls)
@@ -159,5 +208,88 @@ mod tests {
     #[test]
     fn filename_ignores_query_string() {
         assert_eq!(url_to_filename("https://example.com/page?foo=bar"), "page.md");
+    }
+
+    #[test]
+    fn filter_sitemap_urls_accepts_same_host() {
+        let body = "<loc>https://example.com/a</loc><loc>https://example.com/b/c</loc>";
+        let result = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap();
+        assert_eq!(
+            result,
+            vec!["https://example.com/a", "https://example.com/b/c"]
+        );
+    }
+
+    #[test]
+    fn filter_sitemap_urls_rejects_different_host() {
+        let body = "<loc>https://evil.example/x</loc>";
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap_err();
+        assert!(err.contains("evil.example"), "error was: {}", err);
+        assert!(err.contains("example.com"), "error was: {}", err);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_rejects_subdomain_mismatch() {
+        let body = "<loc>https://www.example.com/x</loc>";
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap_err();
+        assert!(err.contains("www.example.com"), "error was: {}", err);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_case_insensitive_host() {
+        let body = "<loc>https://example.com/x</loc>";
+        let result = filter_sitemap_urls("https://Example.COM/sitemap.xml", body).unwrap();
+        assert_eq!(result, vec!["https://example.com/x"]);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_rejects_non_http_scheme() {
+        let body = "<loc>file:///etc/passwd</loc>";
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap_err();
+        assert!(err.contains("file:///etc/passwd"), "error was: {}", err);
+
+        let body = "<loc>ftp://example.com/x</loc>";
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap_err();
+        assert!(err.contains("ftp://example.com/x"), "error was: {}", err);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_resolves_relative_paths() {
+        let body = "<loc>/about</loc><loc>blog/post</loc>";
+        let result = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap();
+        let expected_about = Url::parse("https://example.com/sitemap.xml")
+            .unwrap()
+            .join("/about")
+            .unwrap()
+            .to_string();
+        let expected_post = Url::parse("https://example.com/sitemap.xml")
+            .unwrap()
+            .join("blog/post")
+            .unwrap()
+            .to_string();
+        assert_eq!(result, vec![expected_about, expected_post]);
+        assert!(result.iter().all(|u| u.starts_with("https://example.com/")));
+    }
+
+    #[test]
+    fn filter_sitemap_urls_reports_multiple_bad_entries() {
+        let body =
+            "<loc>https://evil.example/x</loc><loc>https://other.example/y</loc>";
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", body).unwrap_err();
+        assert!(err.contains("evil.example"), "error was: {}", err);
+        assert!(err.contains("other.example"), "error was: {}", err);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_empty_body() {
+        let err = filter_sitemap_urls("https://example.com/sitemap.xml", "").unwrap_err();
+        assert!(err.contains("no <loc> entries found"), "error was: {}", err);
+    }
+
+    #[test]
+    fn filter_sitemap_urls_one_bad_aborts_whole_call() {
+        let body = "<loc>https://example.com/a</loc><loc>https://evil.example/x</loc>";
+        let result = filter_sitemap_urls("https://example.com/sitemap.xml", body);
+        assert!(result.is_err());
     }
 }
