@@ -6,14 +6,6 @@ Command-line tool for browsing and validating [content-md](https://content-md.or
 
 Pre-built binaries are available [under releases](https://github.com/OneOffTech/contentmd/releases) for major platforms.
 
-
-If you want to build from source
-
-```sh
-cd rust && cargo build --release
-# binary at target/release/contentmd
-```
-
 ## Commands
 
 ### Browse
@@ -34,10 +26,10 @@ contentmd https://contentmd.org/specification/
 
 ```sh
 # Multiple URLs saved to a folder
-contentmd --output ./pages https://example.com/a https://example.com/b
+contentmd --output ./pages https://contentmd.org/specification/ https://contentmd.org/consumers/
 
 # Entire site via sitemap
-contentmd --sitemap --output ./pages https://example.com
+contentmd --sitemap --output ./pages https://contentmd.org
 ```
 
 ---
@@ -140,10 +132,26 @@ Agent mode is also **auto-detected** from the environment. If any of the followi
 By default the CLI reports redirects rather than following them silently:
 
 ```
-Error: server redirected to https://www.example.com/ (HTTP 301) — use --follow-redirect to follow
+Error: server redirected to https://www.contentmd.org/ (HTTP 301) — use --follow-redirect to follow
 ```
 
 Pass `--follow-redirect` to follow up to 10 hops automatically.
+
+---
+
+## Development
+
+```sh
+# Run the test suite
+cargo test
+
+# Build a release binary
+cargo build --release
+# binary at target/release/contentmd
+
+# Lint (warnings are errors)
+cargo clippy -- -D warnings
+```
 
 ---
 
