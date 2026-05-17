@@ -3,6 +3,9 @@ use crate::http::HttpClient;
 use crate::output;
 use crate::tokens;
 use std::fs;
+use std::fs::OpenOptions;
+use std::io::Write;
+use std::path::Path;
 use url::Url;
 
 pub async fn run(
@@ -50,11 +53,26 @@ pub async fn run(
                 }
                 Some(ref dir) => {
                     let filename = binary_filename_from_url(url);
-                    let path = format!("{}/{}", dir, filename);
+                    let path = Path::new(dir).join(&filename);
                     let bytes = result.raw_bytes.as_deref().unwrap_or(&[]);
-                    fs::write(&path, bytes)
-                        .map_err(|e| format!("failed to write {}: {}", path, e))?;
-                    println!("Saved: {} ({})", path, output::format_size(result.size_bytes));
+                    let mut f = OpenOptions::new()
+                        .write(true)
+                        .create_new(true)
+                        .open(&path)
+                        .map_err(|e| {
+                            if e.kind() == std::io::ErrorKind::AlreadyExists {
+                                format!("refusing to overwrite existing file {}", path.display())
+                            } else {
+                                format!("failed to create {}: {}", path.display(), e)
+                            }
+                        })?;
+                    f.write_all(bytes)
+                        .map_err(|e| format!("failed to write {}: {}", path.display(), e))?;
+                    println!(
+                        "Saved: {} ({})",
+                        path.display(),
+                        output::format_size(result.size_bytes)
+                    );
                 }
             }
             continue;
@@ -157,13 +175,121 @@ fn filter_sitemap_urls(sitemap_url: &str, body: &str) -> Result<Vec<String>, Str
 fn binary_filename_from_url(url: &str) -> String {
     Url::parse(url)
         .map(|u| {
-            u.path_segments()
+            let raw = u
+                .path_segments()
                 .and_then(|mut s| s.next_back())
                 .filter(|s| !s.is_empty())
-                .unwrap_or("download")
-                .to_string()
+                .unwrap_or("download");
+            sanitize_filename(raw)
         })
         .unwrap_or_else(|_| "download".to_string())
+}
+
+fn sanitize_filename(raw: &str) -> String {
+    let decoded = percent_decode_lossy(raw);
+
+    let replaced: String = decoded
+        .chars()
+        .map(|c| match c {
+            '/' | '\\' | ':' | '*' | '?' | '"' | '<' | '>' | '|' => '_',
+            c if c.is_control() => '_',
+            c => c,
+        })
+        .collect();
+
+    let mut s = replaced.as_str();
+    while let Some(rest) = s.strip_prefix('.') {
+        s = rest;
+    }
+
+    let s = s.trim_end_matches(|c: char| c == '.' || c.is_whitespace());
+
+    if s.is_empty() || s == "." || s == ".." {
+        return "download".to_string();
+    }
+
+    let stem_lower = s
+        .split('.')
+        .next()
+        .unwrap_or(s)
+        .to_ascii_lowercase();
+    if is_windows_reserved(&stem_lower) {
+        return "download".to_string();
+    }
+
+    if s.len() <= 128 {
+        return s.to_string();
+    }
+
+    if let Some(dot_pos) = s.rfind('.') {
+        let stem = &s[..dot_pos];
+        let ext = &s[dot_pos..];
+        if ext.len() < 128 {
+            let max_stem_bytes = 128 - ext.len();
+            let stem_trunc = truncate_to_char_boundary(stem, max_stem_bytes);
+            return format!("{}{}", stem_trunc, ext);
+        }
+    }
+
+    truncate_to_char_boundary(s, 128).to_string()
+}
+
+fn is_windows_reserved(name: &str) -> bool {
+    matches!(
+        name,
+        "con" | "prn"
+            | "aux"
+            | "nul"
+            | "com1"
+            | "com2"
+            | "com3"
+            | "com4"
+            | "com5"
+            | "com6"
+            | "com7"
+            | "com8"
+            | "com9"
+            | "lpt1"
+            | "lpt2"
+            | "lpt3"
+            | "lpt4"
+            | "lpt5"
+            | "lpt6"
+            | "lpt7"
+            | "lpt8"
+            | "lpt9"
+    )
+}
+
+fn truncate_to_char_boundary(s: &str, max_bytes: usize) -> &str {
+    if s.len() <= max_bytes {
+        return s;
+    }
+    let mut end = max_bytes;
+    while end > 0 && !s.is_char_boundary(end) {
+        end -= 1;
+    }
+    &s[..end]
+}
+
+fn percent_decode_lossy(input: &str) -> String {
+    let bytes = input.as_bytes();
+    let mut out: Vec<u8> = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%' && i + 2 < bytes.len() {
+            let hi = (bytes[i + 1] as char).to_digit(16);
+            let lo = (bytes[i + 2] as char).to_digit(16);
+            if let (Some(h), Some(l)) = (hi, lo) {
+                out.push((h * 16 + l) as u8);
+                i += 3;
+                continue;
+            }
+        }
+        out.push(bytes[i]);
+        i += 1;
+    }
+    String::from_utf8_lossy(&out).into_owned()
 }
 
 pub(crate) fn url_to_filename(url: &str) -> String {
@@ -291,5 +417,114 @@ mod tests {
         let body = "<loc>https://example.com/a</loc><loc>https://evil.example/x</loc>";
         let result = filter_sitemap_urls("https://example.com/sitemap.xml", body);
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn sanitize_strips_leading_dots() {
+        assert_eq!(sanitize_filename(".bashrc"), "bashrc");
+        assert_eq!(sanitize_filename("..env"), "env");
+    }
+
+    #[test]
+    fn sanitize_replaces_path_separators() {
+        assert_eq!(sanitize_filename("a/b"), "a_b");
+        assert_eq!(sanitize_filename("a\\b"), "a_b");
+    }
+
+    #[test]
+    fn sanitize_replaces_windows_reserved_chars() {
+        assert_eq!(sanitize_filename("a:b*c?d"), "a_b_c_d");
+    }
+
+    #[test]
+    fn sanitize_replaces_control_chars() {
+        assert_eq!(sanitize_filename("a\0b"), "a_b");
+        assert_eq!(sanitize_filename("a\nb"), "a_b");
+    }
+
+    #[test]
+    fn sanitize_strips_trailing_dot_and_space() {
+        assert_eq!(sanitize_filename("name. "), "name");
+    }
+
+    #[test]
+    fn sanitize_empty_becomes_download() {
+        assert_eq!(sanitize_filename(""), "download");
+        assert_eq!(sanitize_filename("."), "download");
+        assert_eq!(sanitize_filename(".."), "download");
+        assert_eq!(sanitize_filename("...   "), "download");
+    }
+
+    #[test]
+    fn sanitize_windows_reserved_name_becomes_download() {
+        assert_eq!(sanitize_filename("CON"), "download");
+        assert_eq!(sanitize_filename("con"), "download");
+        assert_eq!(sanitize_filename("COM1"), "download");
+        assert_eq!(sanitize_filename("lpt9"), "download");
+        assert_eq!(sanitize_filename("CON.txt"), "download");
+    }
+
+    #[test]
+    fn sanitize_truncates_long_names_preserving_extension() {
+        let stem = "a".repeat(300);
+        let input = format!("{}.pdf", stem);
+        let out = sanitize_filename(&input);
+        assert!(out.len() <= 128, "expected <= 128 bytes, got {}", out.len());
+        assert!(out.ends_with(".pdf"), "expected .pdf suffix, got {}", out);
+    }
+
+    #[test]
+    fn sanitize_percent_decodes() {
+        assert_eq!(sanitize_filename("file%2Ename"), "file.name");
+    }
+
+    #[test]
+    fn binary_filename_from_url_dotfile() {
+        let result = binary_filename_from_url("https://example.com/.env");
+        assert!(!result.starts_with('.'), "got: {}", result);
+        assert!(!result.is_empty());
+    }
+
+    #[test]
+    fn binary_filename_from_url_invalid_url_falls_back() {
+        assert_eq!(binary_filename_from_url("not a url"), "download");
+    }
+
+    #[test]
+    fn binary_filename_from_url_trailing_slash() {
+        assert_eq!(
+            binary_filename_from_url("https://example.com/foo/"),
+            "download"
+        );
+    }
+
+    #[test]
+    fn no_clobber_create_new_errors_when_file_exists() {
+        use std::fs;
+        use std::process;
+        use std::time::{SystemTime, UNIX_EPOCH};
+
+        let nanos = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let mut path = std::env::temp_dir();
+        path.push(format!(
+            "contentmd_clobber_test_{}_{}.bin",
+            process::id(),
+            nanos
+        ));
+
+        fs::write(&path, b"existing").expect("setup write failed");
+
+        let result = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(&path);
+
+        let err = result.expect_err("expected AlreadyExists error");
+        assert_eq!(err.kind(), std::io::ErrorKind::AlreadyExists);
+
+        let _ = fs::remove_file(&path);
     }
 }
