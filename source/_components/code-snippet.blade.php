@@ -1,0 +1,7 @@
+<div class="relative rounded bg-zinc-200 dark:bg-zinc-800 p-3 pr-8 font-mono text-xs text-zinc-900 dark:text-zinc-100 overflow-x-auto agent:hidden" x-data="{ copied: false }" x-bind:data-copied="copied">
+    <span x-ref="code">{{ $slot }}</span>
+    <button type="button" @click="navigator.clipboard.writeText($refs.code.innerText.trim()).then(() => { copied = true; setTimeout(() => copied = false, 2000) })" class="absolute hit-area-2 size-6 shrink-0 top-2 right-2 text-zinc-900 dark:text-zinc-100 hover:text-zinc-950 dark:hover:text-white transition-colors" aria-label="Copy to clipboard">
+        <svg x-show="!copied" class="size-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        <svg x-show="copied" class="size-4 text-emerald-700 dark:text-emerald-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"></path></svg>
+    </button>
+</div>

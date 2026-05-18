@@ -25,4 +25,15 @@ return [
         return  '/' . trimPath($path);
 
     },
+
+    'isActive' => function ($page, $path) {
+        $pagePath = str_replace('\\', '/', trimPath($page->getPath()));
+        $path = trimPath($path);
+
+        if(Str::endsWith($path, '*')){
+            $path = rtrim($path, '*');
+            return Str::startsWith($pagePath, $path) || $pagePath === $path;
+        }
+        return Str::endsWith($pagePath, $path) || $pagePath === $path;
+    },
 ];

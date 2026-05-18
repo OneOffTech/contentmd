@@ -1,3 +1,5 @@
+[![Supports content-md format for AI Agents](https://contentmd.org/badge.svg)](https://contentmd.org)
+
 # Content-md
 
 [content-md](https://contentmd.org) is an open specification for structuring content to be consumed by AI agents.
@@ -8,8 +10,9 @@ Content-md synthesizes the current practices of structuring the markdown represe
 
 - **[Documentation](https://contentmd.org)** — Motivation, guides and tutorials
 - **[Specification](https://contentmd.org/specification)** — Format details
+- **[`contentmd` Command Line](https://contentmd.org/cli)** — Fetch and validate markdown
 
-This repo contains the specification, documentation, and reference guides.
+This repo contains the specification, documentation, reference guides, and the Rust command line.
 
 ## About
 
