@@ -26,7 +26,7 @@ card:
                     Download from GitHub
                 </a>
             </p>
-            <p class="text-sm text-zinc-700">for Windows, Linux and MacOS</p>
+            <p class="text-sm text-zinc-700 dark:text-zinc-200">for Windows, Linux and MacOS</p>
         </div>
 
     </x-slot>
