@@ -123,6 +123,47 @@
     </x-container>
 </x-section-panel>
 
+
+{{-- Badges --}}
+<div class="pt-8">
+    <x-section>
+        <x-slot name="eyebrow"><x-eyebrow>Badges</x-eyebrow></x-slot>
+
+        We have badges too
+
+        <x-slot name="subheadline">Add a badge to show that your project or site serves content-md.</x-slot>
+    </x-section>
+
+    <x-container class="mb-16 mt-4">
+        <x-card-grid>
+            <div class="flex flex-col gap-3">
+                <div class="rounded-lg py-5 flex items-center  agent:hidden">
+                    <img src="/badge.svg" alt="content-md badge" width="132" height="20">
+                </div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 agent:hidden">Markdown</p>
+                <x-code-snippet>[![Supports content-md format for AI Agents](https://contentmd.org/badge.svg)](https://contentmd.org)</x-code-snippet>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 agent:hidden">HTML</p>
+                <x-code-snippet>&lt;a href="https://contentmd.org"&gt;&lt;img src="https://contentmd.org/badge.svg" alt="Supports content-md format for AI Agents"&gt;&lt;/a&gt;</x-code-snippet>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <div class="rounded-lg py-5 flex items-center  agent:hidden">
+                    <img src="/badge-flat.svg" alt="content-md flat badge" width="132" height="20">
+                </div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 agent:hidden">Markdown</p>
+                <x-code-snippet>[![Supports content-md format for AI Agents](https://contentmd.org/badge-flat.svg)](https://contentmd.org)</x-code-snippet>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 agent:hidden">HTML</p>
+                <x-code-snippet>&lt;a href="https://contentmd.org"&gt;&lt;img src="https://contentmd.org/badge-flat.svg" alt="Supports content-md format for AI Agents"&gt;&lt;/a&gt;</x-code-snippet>
+            </div>
+        </x-card-grid>
+
+        <div class="hidden agent:block prose prose-zinc dark:prose-invert max-w-none mt-4">
+            <p><strong>Standard:</strong> <code>[![Supports content-md format for AI Agents](https://contentmd.org/badge.svg)](https://contentmd.org)</code></p>
+            <p><strong>Flat:</strong> <code>[![Supports content-md format for AI Agents](https://contentmd.org/badge-flat.svg)](https://contentmd.org)</code></p>
+        </div>
+    </x-container>
+</div>
+
 <div class="h-28 agent:hidden"></div>
 
 <x-container class="relative grid grid-rows-2 agent:hidden">
@@ -171,6 +212,20 @@ Agents.md targets coding agents with README context for code repositories: build
 ### vs Skills
 
 Skills provides additional knowledge to agents, currently within dedicated folders. content-md responses are nearly compatible with Skills; the frontmatter fields map closely.
+
+## Badges
+
+Promote the usage of content-md via the badge.
+
+Standard badge:
+```
+[![content-md](https://contentmd.org/badge.svg)](https://contentmd.org)
+```
+
+Flat badge:
+```
+[![content-md](https://contentmd.org/badge-flat.svg)](https://contentmd.org)
+```
 
 <nav>
 - [Reference — frontmatter fields and custom block syntax](/reference)
